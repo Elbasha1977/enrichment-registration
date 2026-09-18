@@ -8,6 +8,11 @@
   * { box-sizing: border-box; }
   body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
   .container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+
+  /* ===== صورة الدباجة ===== */
+  .header-logo { text-align: center; margin-bottom: 20px; }
+  .header-logo img { max-width: 100%; height: auto; max-height: 140px; }
+
   h1 { color: #1a3a5c; text-align: center; font-size: 22px; margin-bottom: 25px; }
   label { display: block; margin: 15px 0 6px; font-weight: 600; color: #333; }
   input[type="text"], input[type="tel"] { width: 100%; padding: 11px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; }
@@ -29,10 +34,42 @@
   .msg.success { background: #eafaf1; color: #27ae60; display: block; }
   .msg.info { background: #fff3cd; color: #856404; display: block; }
   .counter { display: block; margin-top: 8px; color: #666; font-size: 14px; }
+
+  /* ===== تذييل المطوّر ===== */
+  .footer-dev {
+    margin-top: 35px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    text-align: right;
+  }
+  .footer-dev img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    border: 3px solid #4a90d9;
+  }
+  .footer-dev .dev-text {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+  }
+  .footer-dev .dev-text strong { color: #1a3a5c; }
 </style>
 </head>
 <body>
 <div class="container">
+
+  <!-- ===== صورة الدباجة ===== -->
+  <div class="header-logo">
+    <img src="https://i.postimg.cc/tRm07wZF/MOTTO.png" alt="الدباجة">
+  </div>
+
   <h1>تسجيل الصفوف الإثرائية</h1>
 
   <label>الرقم الشخصي للطالب</label>
@@ -58,6 +95,17 @@
 
   <button id="submitBtn" disabled>إرسال</button>
   <div id="message" class="msg"></div>
+
+  <!-- ===== تذييل المطوّر ===== -->
+  <div class="footer-dev">
+    <img src="https://i.postimg.cc/L5htcFQM/Screenshot-2025-09-24-164652.jpg" alt="المطوّر">
+    <div class="dev-text">
+      تم التصميم بواسطة<br>
+      <strong>عبدالباسط عطية</strong><br>
+      العام الأكاديمي 2026-2027
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -67,7 +115,7 @@ const SUBJECTS = [
   "التربية الإسلامية", "الدراسات الاجتماعية"
 ];
 
-// ⚠️ تأكد أن الرابط في سطر واحد بدون فواصل أسطر
+// ✅ الرابط الجديد
 const API_URL = "https://script.google.com/macros/s/AKfycbypr7Evjccdo0Bt0wqEqKNdXpMwTBXdVUyTn1UBCbNaSdNWD6bEGD4Ve59Eco8anIjq/exec";
 const SECRET_KEY = "AB2027";
 
@@ -76,12 +124,11 @@ let selectedSubjects = [];
 let studentData = null;
 let allStudents = {};
 
-// ================== تحميل الطلاب (مع تحويل المصفوفة إلى كائن) ==================
+// ================== تحميل الطلاب ==================
 fetch("students.json")
   .then(r => r.json())
   .then(data => {
     allStudents = {};
-    // دعم الحالتين: مصفوفة أو كائن جاهز
     if (Array.isArray(data)) {
       data.forEach(item => {
         const id = String(item.QID || item.id || item.studentId || "").trim();
@@ -148,7 +195,7 @@ document.getElementById("studentId").addEventListener("input", function() {
   checkForm();
 });
 
-// ================== الهاتف: أرقام إنجليزية فقط ==================
+// ================== الهاتف ==================
 document.getElementById("phone").addEventListener("input", function() {
   this.value = this.value.replace(/[^0-9+\- ]/g, "");
   checkForm();
