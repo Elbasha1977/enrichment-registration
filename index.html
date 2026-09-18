@@ -42,7 +42,6 @@
   }
   .rules-btn:hover { background: #3a7bc8; }
 
-  /* قسم التواصل */
   .contact-section { margin-top: 25px; padding: 20px; background: #f8fafc; border-radius: 10px; border: 1px solid #e1e8ed; }
   .contact-section h3 { text-align: center; color: #1a3a5c; font-size: 16px; margin: 0 0 15px 0; }
   .contact-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -57,7 +56,6 @@
   .contact-btn.email { background: #EA4335; }
   .contact-btn svg { width: 20px; height: 20px; fill: white; }
 
-  /* النافذة المنبثقة */
   .modal-overlay {
     display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0,0,0,0.6); z-index: 1000; padding: 20px; overflow-y: auto;
@@ -94,7 +92,6 @@
   .close-btn:hover:not(:disabled) { background: #219a52; }
   .close-btn:disabled { background: #bdc3c7; cursor: not-allowed; }
 
-  /* تذييل الفريق */
   .footer-team {
     margin-top: 35px; padding-top: 20px; border-top: 1px solid #eee;
     display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
@@ -108,7 +105,6 @@
   .team-member .member-role { color: #4a90d9; font-weight: 700; font-size: 13px; display: block; }
   .team-member .member-name { color: #1a3a5c; font-weight: 700; font-size: 14px; display: block; margin-top: 3px; }
 
-  /* ===== لوحة الإدارة ===== */
   .admin-overlay {
     display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0,0,0,0.75); z-index: 2000; padding: 20px; overflow-y: auto;
@@ -119,15 +115,9 @@
     border-radius: 12px; padding: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.4);
     max-height: 92vh; overflow-y: auto;
   }
-  .admin-box h2 {
-    color: #1a3a5c; text-align: center; font-size: 22px; margin: 0 0 5px 0;
-  }
-  .admin-box .admin-subtitle {
-    text-align: center; color: #666; font-size: 14px; margin-bottom: 20px;
-  }
-  .admin-links {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;
-  }
+  .admin-box h2 { color: #1a3a5c; text-align: center; font-size: 22px; margin: 0 0 5px 0; }
+  .admin-box .admin-subtitle { text-align: center; color: #666; font-size: 14px; margin-bottom: 20px; }
+  .admin-links { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
   .admin-link {
     display: flex; align-items: center; justify-content: center; gap: 8px;
     padding: 14px; border-radius: 8px; text-decoration: none;
@@ -139,54 +129,26 @@
   .admin-link.gsheet { background: #0F9D58; }
   .admin-link.refresh { background: #6c757d; border: none; cursor: pointer; font-family: inherit; }
 
-  .admin-stats {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 12px; margin-bottom: 20px;
-  }
-  .stat-card {
-    background: linear-gradient(135deg, #4a90d9, #3a7bc8);
-    color: white; padding: 15px; border-radius: 10px; text-align: center;
-  }
+  .admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .stat-card { background: linear-gradient(135deg, #4a90d9, #3a7bc8); color: white; padding: 15px; border-radius: 10px; text-align: center; }
   .stat-card.green { background: linear-gradient(135deg, #27ae60, #219a52); }
   .stat-card.orange { background: linear-gradient(135deg, #f39c12, #e67e22); }
   .stat-card .stat-value { font-size: 28px; font-weight: bold; line-height: 1; }
   .stat-card .stat-label { font-size: 13px; margin-top: 6px; opacity: 0.95; }
 
-  .admin-section-title {
-    color: #1a3a5c; font-size: 16px; font-weight: bold;
-    margin: 20px 0 10px 0; padding-bottom: 6px;
-    border-bottom: 2px solid #eee;
-  }
-  .subject-stats {
-    display: flex; flex-direction: column; gap: 8px;
-  }
+  .admin-section-title { color: #1a3a5c; font-size: 16px; font-weight: bold; margin: 20px 0 10px 0; padding-bottom: 6px; border-bottom: 2px solid #eee; }
+  .subject-stats { display: flex; flex-direction: column; gap: 8px; }
   .subject-row {
     display: flex; align-items: center; gap: 12px;
     padding: 10px 14px; background: #f8fafc; border-radius: 8px;
     border: 1px solid #e1e8ed;
   }
-  .subject-row .subject-name {
-    flex: 1; font-weight: 600; color: #333; font-size: 15px;
-  }
-  .subject-row .subject-bar {
-    flex: 2; height: 12px; background: #e1e8ed; border-radius: 6px; overflow: hidden;
-  }
-  .subject-row .subject-bar-inner {
-    height: 100%; background: linear-gradient(90deg, #4a90d9, #3a7bc8);
-    transition: width 0.4s ease;
-  }
-  .subject-row .subject-count {
-    font-weight: bold; color: #4a90d9; min-width: 50px; text-align: left;
-    font-size: 16px;
-  }
-  .admin-empty {
-    text-align: center; padding: 25px; color: #999; font-size: 15px;
-  }
-  .admin-close {
-    display: block; width: 100%; padding: 14px; margin-top: 20px;
-    background: #e74c3c; color: white; border: none; border-radius: 8px;
-    font-size: 16px; font-weight: bold; cursor: pointer;
-  }
+  .subject-row .subject-name { flex: 1; font-weight: 600; color: #333; font-size: 15px; }
+  .subject-row .subject-bar { flex: 2; height: 12px; background: #e1e8ed; border-radius: 6px; overflow: hidden; }
+  .subject-row .subject-bar-inner { height: 100%; background: linear-gradient(90deg, #4a90d9, #3a7bc8); transition: width 0.4s ease; }
+  .subject-row .subject-count { font-weight: bold; color: #4a90d9; min-width: 50px; text-align: left; font-size: 16px; }
+  .admin-empty { text-align: center; padding: 25px; color: #999; font-size: 15px; }
+  .admin-close { display: block; width: 100%; padding: 14px; margin-top: 20px; background: #e74c3c; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
   .admin-close:hover { background: #c0392b; }
 
   @media (max-width: 480px) {
@@ -281,7 +243,7 @@
 
 </div>
 
-<!-- ===== نافذة الضوابط ===== -->
+<!-- نافذة الضوابط -->
 <div class="modal-overlay" id="rulesModal">
   <div class="modal-box">
     <div class="modal-school-logo">
@@ -333,7 +295,7 @@
   </div>
 </div>
 
-<!-- ===== لوحة الإدارة المخفية ===== -->
+<!-- لوحة الإدارة -->
 <div class="admin-overlay" id="adminModal">
   <div class="admin-box">
     <h2>🔐 لوحة الإدارة</h2>
@@ -352,7 +314,7 @@
       🔄 تحديث الإحصائيات
     </button>
 
-    <div class="admin-stats" id="adminStats">
+    <div class="admin-stats">
       <div class="stat-card">
         <div class="stat-value" id="statTotal">-</div>
         <div class="stat-label">إجمالي المسجلين</div>
@@ -388,15 +350,14 @@ const SUBJECTS = [
   "التربية الإسلامية", "الدراسات الاجتماعية"
 ];
 
-const API_URL = "https://script.google.com/macros/s/AKfycbzvPWrZDt8cCH4o7roYG-bYB4hGXYo37Hnkho7TvKkZmY0KYiTXFUCiwAnkbvuC7yk/exec
-
-";
+// ✅ الرابط الجديد (في سطر واحد، بدون فواصل)
+const API_URL = "https://script.google.com/macros/s/AKfycby5OTrx8A86RFtSBmKJjQonWu1-nWC595kbLTCa96KxQy1qpEwBExrpe0_yjV4sdSlf/exec";
 const SECRET_KEY = "AB2027";
 
-// رابط Google Sheet (للوحة الإدارة)
-const GSHEET_URL = "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit";
+// معرّف Google Sheet (ضعه هنا)
+const GSHEET_ID = "ضع_هنا_معرّف_Google_Sheet";
+const GSHEET_URL = "https://docs.google.com/spreadsheets/d/" + GSHEET_ID + "/edit";
 
-// رابط JSON لقراءة البيانات (سنضيفه في Apps Script)
 const STATS_API_URL = API_URL + "?stats=1&secret=" + SECRET_KEY;
 
 // ================== المتغيرات ==================
@@ -404,9 +365,22 @@ let selectedSubjects = [];
 let studentData = null;
 let allStudents = {};
 
+// ================== عرض المواد (يعمل فوراً) ==================
+const subjectsList = document.getElementById("subjectsList");
+SUBJECTS.forEach((sub) => {
+  const div = document.createElement("div");
+  div.className = "subject-item";
+  div.textContent = sub;
+  div.onclick = () => toggleSubject(div, sub);
+  subjectsList.appendChild(div);
+});
+
 // ================== تحميل الطلاب ==================
 fetch("students.json")
-  .then(r => r.json())
+  .then(r => {
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.json();
+  })
   .then(data => {
     allStudents = {};
     if (Array.isArray(data)) {
@@ -422,9 +396,9 @@ fetch("students.json")
     } else {
       allStudents = data;
     }
-    console.log("تم تحميل", Object.keys(allStudents).length, "طالب");
+    console.log("✅ تم تحميل", Object.keys(allStudents).length, "طالب");
   })
-  .catch(e => console.error("فشل تحميل students.json", e));
+  .catch(e => console.error("❌ فشل تحميل students.json:", e));
 
 // ================== نافذة الضوابط ==================
 const rulesModal = document.getElementById("rulesModal");
@@ -467,16 +441,14 @@ rulesModal.addEventListener("click", (e) => {
 
 printRulesBtn.addEventListener("click", () => window.print());
 
-// ================== لوحة الإدارة المخفية ==================
+// ================== لوحة الإدارة ==================
 const adminModal = document.getElementById("adminModal");
 const adminCloseBtn = document.getElementById("adminCloseBtn");
 const refreshStatsBtn = document.getElementById("refreshStatsBtn");
 const gsheetLink = document.getElementById("gsheetLink");
 
-// رابط Google Sheet (يمكنك تعديله)
 gsheetLink.href = GSHEET_URL;
 
-// آلية الفتح 1: Ctrl+Shift+A
 document.addEventListener("keydown", (e) => {
   if (e.ctrlKey && e.shiftKey && (e.key === "A" || e.key === "a")) {
     e.preventDefault();
@@ -484,7 +456,6 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// آلية الفتح 2: 5 نقرات على الشعار
 let logoClickCount = 0;
 let logoClickTimer = null;
 document.getElementById("headerLogo").addEventListener("click", () => {
@@ -517,7 +488,6 @@ adminModal.addEventListener("click", (e) => {
 
 refreshStatsBtn.addEventListener("click", loadStats);
 
-// ================== تحميل الإحصائيات ==================
 async function loadStats() {
   const subjectStats = document.getElementById("subjectStats");
   const classStats = document.getElementById("classStats");
@@ -530,44 +500,30 @@ async function loadStats() {
 
     if (data.error) throw new Error(data.error);
 
-    // الأرقام الإجمالية
     document.getElementById("statTotal").textContent = data.totalRows || 0;
     document.getElementById("statUnique").textContent = data.uniqueStudents || 0;
     document.getElementById("statSubjects").textContent = data.subjectCounts ? Object.keys(data.subjectCounts).length : 0;
 
-    // إحصائيات المواد
     if (data.subjectCounts && Object.keys(data.subjectCounts).length > 0) {
       const maxCount = Math.max(...Object.values(data.subjectCounts), 1);
       let html = "";
-      // رتّب تنازلياً
       const sorted = Object.entries(data.subjectCounts).sort((a, b) => b[1] - a[1]);
       sorted.forEach(([subject, count]) => {
         const percent = (count / maxCount) * 100;
-        html += `
-          <div class="subject-row">
-            <div class="subject-name">${subject}</div>
-            <div class="subject-bar"><div class="subject-bar-inner" style="width:${percent}%"></div></div>
-            <div class="subject-count">${count}</div>
-          </div>`;
+        html += `<div class="subject-row"><div class="subject-name">${subject}</div><div class="subject-bar"><div class="subject-bar-inner" style="width:${percent}%"></div></div><div class="subject-count">${count}</div></div>`;
       });
       subjectStats.innerHTML = html;
     } else {
       subjectStats.innerHTML = '<div class="admin-empty">لا توجد بيانات بعد</div>';
     }
 
-    // إحصائيات الصفوف
     if (data.classCounts && Object.keys(data.classCounts).length > 0) {
       const maxCount = Math.max(...Object.values(data.classCounts), 1);
       let html = "";
       const sorted = Object.entries(data.classCounts).sort((a, b) => b[1] - a[1]);
       sorted.forEach(([cls, count]) => {
         const percent = (count / maxCount) * 100;
-        html += `
-          <div class="subject-row">
-            <div class="subject-name">${cls}</div>
-            <div class="subject-bar"><div class="subject-bar-inner" style="width:${percent}%"></div></div>
-            <div class="subject-count">${count}</div>
-          </div>`;
+        html += `<div class="subject-row"><div class="subject-name">${cls}</div><div class="subject-bar"><div class="subject-bar-inner" style="width:${percent}%"></div></div><div class="subject-count">${count}</div></div>`;
       });
       classStats.innerHTML = html;
     } else {
@@ -581,16 +537,7 @@ async function loadStats() {
   }
 }
 
-// ================== عرض المواد ==================
-const subjectsList = document.getElementById("subjectsList");
-SUBJECTS.forEach((sub) => {
-  const div = document.createElement("div");
-  div.className = "subject-item";
-  div.textContent = sub;
-  div.onclick = () => toggleSubject(div, sub);
-  subjectsList.appendChild(div);
-});
-
+// ================== اختيار المواد ==================
 function toggleSubject(el, sub) {
   if (el.classList.contains("selected")) {
     el.classList.remove("selected");
@@ -616,6 +563,8 @@ document.getElementById("studentId").addEventListener("input", function() {
   const nameF = document.getElementById("studentName");
   const classF = document.getElementById("studentClass");
   const phoneF = document.getElementById("phone");
+
+  console.log("🔍 بحث عن:", id, "→ النتيجة:", info);
 
   if (info) {
     nameF.value = info.name;
