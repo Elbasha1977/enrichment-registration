@@ -3,18 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تسجيل الصفوف الإثرائية - للعام الأكاديمي 2026-2027 الفصل الدراسي الأول</title>
+<title>تسجيل الصفوف الإثرائية - منتصف الفصل الدراسي الأول للعام الأكاديمي 2026-2027</title>
 <style>
   * { box-sizing: border-box; }
   body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
   .container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
 
-  /* ===== صورة الدباجة ===== */
-  .header-logo { text-align: center; margin-bottom: 20px; }
+  .header-logo { text-align: center; margin-bottom: 20px; cursor: pointer; user-select: none; }
   .header-logo img { max-width: 100%; height: auto; max-height: 140px; }
 
-  h1 { color: #1a3a5c; text-align: center; font-size: 20px; margin-bottom: 8px; line-height: 1.5; }
-  .subtitle { text-align: center; color: #4a90d9; font-size: 16px; font-weight: 600; margin-bottom: 25px; }
+  h1 { color: #1a3a5c; text-align: center; font-size: 19px; margin-bottom: 8px; line-height: 1.6; }
 
   label { display: block; margin: 15px 0 6px; font-weight: 600; color: #333; }
   input[type="text"], input[type="tel"] { width: 100%; padding: 11px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; }
@@ -37,134 +35,187 @@
   .msg.info { background: #fff3cd; color: #856404; display: block; }
   .counter { display: block; margin-top: 8px; color: #666; font-size: 14px; }
 
-  /* ===== زر الضوابط ===== */
   .rules-btn {
-    width: 100%;
-    padding: 12px;
-    margin-top: 15px;
-    background: #4a90d9;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.2s;
+    width: 100%; padding: 12px; margin-top: 15px;
+    background: #4a90d9; color: white; border: none; border-radius: 8px;
+    font-size: 15px; font-weight: bold; cursor: pointer; transition: background 0.2s;
   }
   .rules-btn:hover { background: #3a7bc8; }
 
-  /* ===== نافذة الضوابط ===== */
+  /* قسم التواصل */
+  .contact-section { margin-top: 25px; padding: 20px; background: #f8fafc; border-radius: 10px; border: 1px solid #e1e8ed; }
+  .contact-section h3 { text-align: center; color: #1a3a5c; font-size: 16px; margin: 0 0 15px 0; }
+  .contact-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .contact-btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 12px; border-radius: 8px; font-size: 15px; font-weight: bold;
+    text-decoration: none; color: white; transition: transform 0.15s, opacity 0.2s;
+    margin: 0; width: 100%; border: none; cursor: pointer;
+  }
+  .contact-btn:hover { transform: translateY(-2px); opacity: 0.95; }
+  .contact-btn.whatsapp { background: #25D366; }
+  .contact-btn.email { background: #EA4335; }
+  .contact-btn svg { width: 20px; height: 20px; fill: white; }
+
+  /* النافذة المنبثقة */
   .modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.6);
-    z-index: 1000;
-    padding: 20px;
-    overflow-y: auto;
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6); z-index: 1000; padding: 20px; overflow-y: auto;
   }
   .modal-overlay.active { display: flex; align-items: flex-start; justify-content: center; }
   .modal-box {
-    background: white;
-    max-width: 700px;
-    width: 100%;
-    margin: auto;
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-    max-height: 90vh;
-    overflow-y: auto;
+    background: white; max-width: 700px; width: 100%; margin: auto;
+    border-radius: 12px; padding: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    max-height: 90vh; overflow-y: auto;
   }
-  .modal-box h2 {
-    color: #1a3a5c;
-    text-align: center;
-    font-size: 22px;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #4a90d9;
-  }
-  .modal-box h3 {
-    color: #4a90d9;
-    font-size: 19px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-  }
+  .modal-school-logo { text-align: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+  .modal-school-logo img { max-width: 100%; max-height: 90px; height: auto; }
+
+  .modal-box h2 { color: #1a3a5c; text-align: center; font-size: 22px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #4a90d9; }
+  .modal-box h3 { color: #4a90d9; font-size: 19px; margin-top: 20px; margin-bottom: 10px; }
   .modal-box ol { padding-right: 25px; margin: 0; }
-  .modal-box ol li {
-    font-size: 17px;
-    line-height: 1.9;
-    color: #333;
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-  .modal-box .agreement-box {
-    background: #fff8e1;
-    border: 2px solid #ffc107;
-    border-radius: 8px;
-    padding: 15px;
-    margin-top: 20px;
-  }
+  .modal-box ol li { font-size: 17px; line-height: 1.9; color: #333; margin-bottom: 8px; font-weight: 500; }
+  .modal-box .agreement-box { background: #fff8e1; border: 2px solid #ffc107; border-radius: 8px; padding: 15px; margin-top: 20px; }
   .modal-box .agreement-box h3 { margin-top: 0; color: #b8860b; }
   .modal-box .agreement-box p { font-size: 17px; line-height: 1.9; color: #333; font-weight: 500; margin: 0; }
-  .close-btn {
-    display: block;
-    width: 100%;
-    padding: 14px;
-    margin-top: 20px;
-    background: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .close-btn:hover { background: #c0392b; }
 
-  /* ===== تذييل المطوّرين والمسؤولين ===== */
+  .modal-approve {
+    background: #eaf4fd; border: 2px solid #4a90d9; border-radius: 8px;
+    padding: 15px; margin-top: 20px; display: flex; align-items: center;
+    gap: 12px; cursor: pointer; user-select: none;
+  }
+  .modal-approve input[type="checkbox"] { width: 22px; height: 22px; cursor: pointer; accent-color: #4a90d9; flex-shrink: 0; }
+  .modal-approve label { margin: 0; font-size: 17px; font-weight: 600; color: #1a3a5c; cursor: pointer; }
+
+  .modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+  .print-btn { padding: 14px; background: #4a90d9; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+  .print-btn:hover { background: #3a7bc8; }
+  .close-btn { padding: 14px; background: #27ae60; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+  .close-btn:hover:not(:disabled) { background: #219a52; }
+  .close-btn:disabled { background: #bdc3c7; cursor: not-allowed; }
+
+  /* تذييل الفريق */
   .footer-team {
-    margin-top: 35px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    margin-top: 35px; padding-top: 20px; border-top: 1px solid #eee;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
   }
-  .team-member {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    text-align: right;
-  }
+  .team-member { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; }
   .team-member img {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    border: 3px solid #4a90d9;
-    flex-shrink: 0;
+    width: 90px; height: 90px; border-radius: 50%; object-fit: cover;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.18); border: 3px solid #4a90d9;
   }
-  .team-member .member-text {
-    font-size: 14px;
-    color: #555;
-    line-height: 1.6;
+  .team-member .member-text { font-size: 13px; color: #555; line-height: 1.7; }
+  .team-member .member-role { color: #4a90d9; font-weight: 700; font-size: 13px; display: block; }
+  .team-member .member-name { color: #1a3a5c; font-weight: 700; font-size: 14px; display: block; margin-top: 3px; }
+
+  /* ===== لوحة الإدارة ===== */
+  .admin-overlay {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.75); z-index: 2000; padding: 20px; overflow-y: auto;
   }
-  .team-member .member-text strong { color: #1a3a5c; font-size: 15px; }
-  .team-member .member-role { color: #4a90d9; font-weight: 600; font-size: 13px; }
+  .admin-overlay.active { display: flex; align-items: flex-start; justify-content: center; }
+  .admin-box {
+    background: white; max-width: 800px; width: 100%; margin: auto;
+    border-radius: 12px; padding: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    max-height: 92vh; overflow-y: auto;
+  }
+  .admin-box h2 {
+    color: #1a3a5c; text-align: center; font-size: 22px; margin: 0 0 5px 0;
+  }
+  .admin-box .admin-subtitle {
+    text-align: center; color: #666; font-size: 14px; margin-bottom: 20px;
+  }
+  .admin-links {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;
+  }
+  .admin-link {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px; border-radius: 8px; text-decoration: none;
+    color: white; font-weight: bold; font-size: 15px;
+    transition: transform 0.15s, opacity 0.2s;
+  }
+  .admin-link:hover { transform: translateY(-2px); opacity: 0.95; }
+  .admin-link.onedrive { background: #0078D4; }
+  .admin-link.gsheet { background: #0F9D58; }
+  .admin-link.refresh { background: #6c757d; border: none; cursor: pointer; font-family: inherit; }
+
+  .admin-stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px; margin-bottom: 20px;
+  }
+  .stat-card {
+    background: linear-gradient(135deg, #4a90d9, #3a7bc8);
+    color: white; padding: 15px; border-radius: 10px; text-align: center;
+  }
+  .stat-card.green { background: linear-gradient(135deg, #27ae60, #219a52); }
+  .stat-card.orange { background: linear-gradient(135deg, #f39c12, #e67e22); }
+  .stat-card .stat-value { font-size: 28px; font-weight: bold; line-height: 1; }
+  .stat-card .stat-label { font-size: 13px; margin-top: 6px; opacity: 0.95; }
+
+  .admin-section-title {
+    color: #1a3a5c; font-size: 16px; font-weight: bold;
+    margin: 20px 0 10px 0; padding-bottom: 6px;
+    border-bottom: 2px solid #eee;
+  }
+  .subject-stats {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .subject-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 14px; background: #f8fafc; border-radius: 8px;
+    border: 1px solid #e1e8ed;
+  }
+  .subject-row .subject-name {
+    flex: 1; font-weight: 600; color: #333; font-size: 15px;
+  }
+  .subject-row .subject-bar {
+    flex: 2; height: 12px; background: #e1e8ed; border-radius: 6px; overflow: hidden;
+  }
+  .subject-row .subject-bar-inner {
+    height: 100%; background: linear-gradient(90deg, #4a90d9, #3a7bc8);
+    transition: width 0.4s ease;
+  }
+  .subject-row .subject-count {
+    font-weight: bold; color: #4a90d9; min-width: 50px; text-align: left;
+    font-size: 16px;
+  }
+  .admin-empty {
+    text-align: center; padding: 25px; color: #999; font-size: 15px;
+  }
+  .admin-close {
+    display: block; width: 100%; padding: 14px; margin-top: 20px;
+    background: #e74c3c; color: white; border: none; border-radius: 8px;
+    font-size: 16px; font-weight: bold; cursor: pointer;
+  }
+  .admin-close:hover { background: #c0392b; }
+
+  @media (max-width: 480px) {
+    .team-member img { width: 75px; height: 75px; }
+    .modal-box ol li { font-size: 16px; }
+    .modal-actions { grid-template-columns: 1fr; }
+    .contact-buttons { grid-template-columns: 1fr; }
+    .admin-links { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body * { visibility: hidden; }
+    .modal-box, .modal-box * { visibility: visible; }
+    .modal-box { position: absolute; left: 0; top: 0; width: 100%; max-width: 100%; box-shadow: none; max-height: none; overflow: visible; }
+    .modal-approve, .modal-actions { display: none !important; }
+    .modal-box ol li { font-size: 14px; line-height: 1.7; }
+    .modal-box h2 { font-size: 20px; }
+    .modal-box h3 { font-size: 17px; }
+  }
 </style>
 </head>
 <body>
 <div class="container">
 
-  <!-- ===== صورة الدباجة ===== -->
-  <div class="header-logo">
+  <div class="header-logo" id="headerLogo">
     <img src="https://i.postimg.cc/tRm07wZF/MOTTO.png" alt="الدباجة">
   </div>
 
-  <h1>تسجيل الصفوف الإثرائية</h1>
-  <div class="subtitle">للعام الأكاديمي 2026-2027 - الفصل الدراسي الأول</div>
+  <h1>تسجيل الصفوف الإثرائية - منتصف الفصل الدراسي الأول<br>للعام الأكاديمي 2026-2027</h1>
 
   <label>الرقم الشخصي للطالب</label>
   <input type="text" id="studentId" placeholder="أدخل الرقم الشخصي" autocomplete="off">
@@ -182,7 +233,6 @@
   <div class="subjects" id="subjectsList"></div>
   <small class="counter" id="counter">تم اختيار 0 من 3</small>
 
-  <!-- زر الضوابط -->
   <button type="button" class="rules-btn" id="showRulesBtn">📋 عرض ضوابط الصفوف الإثرائية</button>
 
   <div class="agreement">
@@ -193,26 +243,40 @@
   <button id="submitBtn" disabled>إرسال</button>
   <div id="message" class="msg"></div>
 
-  <!-- ===== تذييل المسؤولين والمطوّر ===== -->
-  <div class="footer-team">
+  <div class="contact-section">
+    <h3>📞 للتواصل مع مسؤول الصفوف الإثرائية</h3>
+    <div class="contact-buttons">
+      <a class="contact-btn whatsapp" href="https://wa.me/97430030869?text=السلام%20عليكم%20أ.%20أحمد%20الدسوقي،%20لدي%20استفسار%20حول%20الصفوف%20الإثرائية" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+        واتساب
+      </a>
+      <a class="contact-btn email" href="mailto:a.edessouki0703@education.qa?subject=استفسار%20حول%20الصفوف%20الإثرائية" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        إيميل
+      </a>
+    </div>
+  </div>
 
+  <div class="footer-team">
     <div class="team-member">
       <img src="https://i.postimg.cc/Cx64sWZD/Whats-App-Image-2026-09-18-at-7-08-53-PM.jpg" alt="مسؤول الصفوف الإثرائية">
       <div class="member-text">
-        <span class="member-role">مسؤول الصفوف الإثرائية</span><br>
-        <strong>الأستاذ أحمد الدسوقي</strong>
+        <span class="member-role">مسؤول الصفوف الإثرائية</span>
+        <span class="member-name">الأستاذ أحمد الدسوقي</span>
       </div>
     </div>
-
     <div class="team-member">
       <img src="https://i.postimg.cc/L5htcFQM/Screenshot-2025-09-24-164652.jpg" alt="المطوّر">
       <div class="member-text">
-        <span class="member-role">تم التصميم بواسطة</span><br>
-        <strong>الأستاذ عبدالباسط عطية</strong><br>
-        العام الأكاديمي 2026-2027
+        <span class="member-role">تم التصميم بواسطة</span>
+        <span class="member-name">الأستاذ عبدالباسط عطية</span>
+        <span style="display:block; margin-top:3px;">العام الأكاديمي 2026-2027</span>
       </div>
     </div>
-
   </div>
 
 </div>
@@ -220,8 +284,10 @@
 <!-- ===== نافذة الضوابط ===== -->
 <div class="modal-overlay" id="rulesModal">
   <div class="modal-box">
+    <div class="modal-school-logo">
+      <img src="https://i.postimg.cc/tRm07wZF/MOTTO.png" alt="شعار المدرسة">
+    </div>
     <h2>ضوابط الصفوف الإثرائية</h2>
-
     <h3>أولاً: ضوابط التسجيل في الصفوف الإثرائية</h3>
     <ol>
       <li>يحق للطالب التسجيل باستخدام الرقم الشخصي مرة واحدة فقط.</li>
@@ -235,7 +301,6 @@
       <li>يجوز للمدرسة تعديل أو إلغاء أي مجموعة إثرائية عند عدم اكتمال العدد المطلوب.</li>
       <li>تعتبر عملية التسجيل موافقة من الطالب على جميع ضوابط الصفوف الإثرائية.</li>
     </ol>
-
     <h3>ثانياً: ضوابط الحضور والالتزام في الصفوف الإثرائية</h3>
     <ol>
       <li>الالتزام بالحضور في الموعد المحدد للصف الإثرائي.</li>
@@ -253,13 +318,66 @@
       <li>الحرص على الاستفادة من الوقت المخصص للبرنامج الإثرائي وتحقيق أهدافه.</li>
       <li>يحق للمدرسة استبعاد الطالب من البرنامج الإثرائي في حال تكرار الغياب أو عدم الالتزام بالضوابط والأنظمة المعتمدة.</li>
     </ol>
-
     <div class="agreement-box">
       <h3>إقرار الطالب وولي الأمر</h3>
       <p>أقر بأنني اطلعت على ضوابط التسجيل والحضور الخاصة بالصفوف الإثرائية، وأتعهد بالالتزام بها طوال فترة البرنامج.</p>
     </div>
+    <label class="modal-approve" for="modalAgree">
+      <input type="checkbox" id="modalAgree">
+      <span>أوافق على جميع الضوابط المذكورة أعلاه</span>
+    </label>
+    <div class="modal-actions">
+      <button type="button" class="print-btn" id="printRulesBtn">🖨️ طباعة الضوابط</button>
+      <button type="button" class="close-btn" id="closeRulesBtn" disabled>إغلاق</button>
+    </div>
+  </div>
+</div>
 
-    <button type="button" class="close-btn" id="closeRulesBtn">إغلاق</button>
+<!-- ===== لوحة الإدارة المخفية ===== -->
+<div class="admin-overlay" id="adminModal">
+  <div class="admin-box">
+    <h2>🔐 لوحة الإدارة</h2>
+    <div class="admin-subtitle">إحصائيات التسجيل في الصفوف الإثرائية</div>
+
+    <div class="admin-links">
+      <a class="admin-link onedrive" href="https://qatareducation-my.sharepoint.com/:x:/g/personal/a_atia1201_education_qa/IQAtrO3zeAYxTbMDk9EDYrvhAc6_AaBW0K1oed1Kw4YndkU?email=a.eldessouki0703%40education.qa&e=wAv96b" target="_blank" rel="noopener">
+        📊 فتح ملف Excel على OneDrive
+      </a>
+      <a class="admin-link gsheet" id="gsheetLink" href="#" target="_blank" rel="noopener">
+        📗 فتح Google Sheet
+      </a>
+    </div>
+
+    <button class="admin-link refresh" id="refreshStatsBtn" style="width:100%; margin-bottom:20px;">
+      🔄 تحديث الإحصائيات
+    </button>
+
+    <div class="admin-stats" id="adminStats">
+      <div class="stat-card">
+        <div class="stat-value" id="statTotal">-</div>
+        <div class="stat-label">إجمالي المسجلين</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-value" id="statUnique">-</div>
+        <div class="stat-label">عدد الطلاب الفريدين</div>
+      </div>
+      <div class="stat-card orange">
+        <div class="stat-value" id="statSubjects">-</div>
+        <div class="stat-label">عدد المواد المسجلة</div>
+      </div>
+    </div>
+
+    <div class="admin-section-title">📚 عدد المسجلين في كل مادة</div>
+    <div class="subject-stats" id="subjectStats">
+      <div class="admin-empty">اضغط "تحديث الإحصائيات" لتحميل البيانات</div>
+    </div>
+
+    <div class="admin-section-title">🏫 عدد المسجلين في كل صف</div>
+    <div class="subject-stats" id="classStats">
+      <div class="admin-empty">اضغط "تحديث الإحصائيات" لتحميل البيانات</div>
+    </div>
+
+    <button class="admin-close" id="adminCloseBtn">إغلاق لوحة الإدارة</button>
   </div>
 </div>
 
@@ -272,6 +390,12 @@ const SUBJECTS = [
 
 const API_URL = "https://script.google.com/macros/s/AKfycbypr7Evjccdo0Bt0wqEqKNdXpMwTBXdVUyTn1UBCbNaSdNWD6bEGD4Ve59Eco8anIjq/exec";
 const SECRET_KEY = "AB2027";
+
+// رابط Google Sheet (للوحة الإدارة)
+const GSHEET_URL = "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit";
+
+// رابط JSON لقراءة البيانات (سنضيفه في Apps Script)
+const STATS_API_URL = API_URL + "?stats=1&secret=" + SECRET_KEY;
 
 // ================== المتغيرات ==================
 let selectedSubjects = [];
@@ -302,20 +426,158 @@ fetch("students.json")
 
 // ================== نافذة الضوابط ==================
 const rulesModal = document.getElementById("rulesModal");
-document.getElementById("showRulesBtn").addEventListener("click", () => {
+const modalAgree = document.getElementById("modalAgree");
+const closeRulesBtn = document.getElementById("closeRulesBtn");
+const showRulesBtn = document.getElementById("showRulesBtn");
+const printRulesBtn = document.getElementById("printRulesBtn");
+
+window.addEventListener("load", () => {
   rulesModal.classList.add("active");
   document.body.style.overflow = "hidden";
 });
-document.getElementById("closeRulesBtn").addEventListener("click", () => {
+
+showRulesBtn.addEventListener("click", () => {
+  modalAgree.checked = false;
+  closeRulesBtn.disabled = true;
+  rulesModal.classList.add("active");
+  document.body.style.overflow = "hidden";
+});
+
+modalAgree.addEventListener("change", () => {
+  closeRulesBtn.disabled = !modalAgree.checked;
+});
+
+closeRulesBtn.addEventListener("click", () => {
+  if (!modalAgree.checked) return;
   rulesModal.classList.remove("active");
   document.body.style.overflow = "";
+  document.getElementById("agreement").checked = true;
+  checkForm();
 });
+
 rulesModal.addEventListener("click", (e) => {
   if (e.target === rulesModal) {
-    rulesModal.classList.remove("active");
+    const box = rulesModal.querySelector(".modal-box");
+    box.style.transform = "translateX(10px)";
+    setTimeout(() => { box.style.transform = ""; }, 150);
+  }
+});
+
+printRulesBtn.addEventListener("click", () => window.print());
+
+// ================== لوحة الإدارة المخفية ==================
+const adminModal = document.getElementById("adminModal");
+const adminCloseBtn = document.getElementById("adminCloseBtn");
+const refreshStatsBtn = document.getElementById("refreshStatsBtn");
+const gsheetLink = document.getElementById("gsheetLink");
+
+// رابط Google Sheet (يمكنك تعديله)
+gsheetLink.href = GSHEET_URL;
+
+// آلية الفتح 1: Ctrl+Shift+A
+document.addEventListener("keydown", (e) => {
+  if (e.ctrlKey && e.shiftKey && (e.key === "A" || e.key === "a")) {
+    e.preventDefault();
+    openAdminPanel();
+  }
+});
+
+// آلية الفتح 2: 5 نقرات على الشعار
+let logoClickCount = 0;
+let logoClickTimer = null;
+document.getElementById("headerLogo").addEventListener("click", () => {
+  logoClickCount++;
+  clearTimeout(logoClickTimer);
+  logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 1500);
+  if (logoClickCount >= 5) {
+    logoClickCount = 0;
+    openAdminPanel();
+  }
+});
+
+function openAdminPanel() {
+  adminModal.classList.add("active");
+  document.body.style.overflow = "hidden";
+  loadStats();
+}
+
+adminCloseBtn.addEventListener("click", () => {
+  adminModal.classList.remove("active");
+  document.body.style.overflow = "";
+});
+
+adminModal.addEventListener("click", (e) => {
+  if (e.target === adminModal) {
+    adminModal.classList.remove("active");
     document.body.style.overflow = "";
   }
 });
+
+refreshStatsBtn.addEventListener("click", loadStats);
+
+// ================== تحميل الإحصائيات ==================
+async function loadStats() {
+  const subjectStats = document.getElementById("subjectStats");
+  const classStats = document.getElementById("classStats");
+  subjectStats.innerHTML = '<div class="admin-empty">جاري التحميل...</div>';
+  classStats.innerHTML = '<div class="admin-empty">جاري التحميل...</div>';
+
+  try {
+    const res = await fetch(STATS_API_URL);
+    const data = await res.json();
+
+    if (data.error) throw new Error(data.error);
+
+    // الأرقام الإجمالية
+    document.getElementById("statTotal").textContent = data.totalRows || 0;
+    document.getElementById("statUnique").textContent = data.uniqueStudents || 0;
+    document.getElementById("statSubjects").textContent = data.subjectCounts ? Object.keys(data.subjectCounts).length : 0;
+
+    // إحصائيات المواد
+    if (data.subjectCounts && Object.keys(data.subjectCounts).length > 0) {
+      const maxCount = Math.max(...Object.values(data.subjectCounts), 1);
+      let html = "";
+      // رتّب تنازلياً
+      const sorted = Object.entries(data.subjectCounts).sort((a, b) => b[1] - a[1]);
+      sorted.forEach(([subject, count]) => {
+        const percent = (count / maxCount) * 100;
+        html += `
+          <div class="subject-row">
+            <div class="subject-name">${subject}</div>
+            <div class="subject-bar"><div class="subject-bar-inner" style="width:${percent}%"></div></div>
+            <div class="subject-count">${count}</div>
+          </div>`;
+      });
+      subjectStats.innerHTML = html;
+    } else {
+      subjectStats.innerHTML = '<div class="admin-empty">لا توجد بيانات بعد</div>';
+    }
+
+    // إحصائيات الصفوف
+    if (data.classCounts && Object.keys(data.classCounts).length > 0) {
+      const maxCount = Math.max(...Object.values(data.classCounts), 1);
+      let html = "";
+      const sorted = Object.entries(data.classCounts).sort((a, b) => b[1] - a[1]);
+      sorted.forEach(([cls, count]) => {
+        const percent = (count / maxCount) * 100;
+        html += `
+          <div class="subject-row">
+            <div class="subject-name">${cls}</div>
+            <div class="subject-bar"><div class="subject-bar-inner" style="width:${percent}%"></div></div>
+            <div class="subject-count">${count}</div>
+          </div>`;
+      });
+      classStats.innerHTML = html;
+    } else {
+      classStats.innerHTML = '<div class="admin-empty">لا توجد بيانات بعد</div>';
+    }
+
+  } catch (err) {
+    console.error(err);
+    subjectStats.innerHTML = '<div class="admin-empty" style="color:#c0392b;">فشل تحميل الإحصائيات: ' + err.message + '</div>';
+    classStats.innerHTML = '';
+  }
+}
 
 // ================== عرض المواد ==================
 const subjectsList = document.getElementById("subjectsList");
