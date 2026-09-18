@@ -105,6 +105,44 @@
   .team-member .member-role { color: #4a90d9; font-weight: 700; font-size: 13px; display: block; }
   .team-member .member-name { color: #1a3a5c; font-weight: 700; font-size: 14px; display: block; margin-top: 3px; }
 
+  /* ===== نافذة الباسورد ===== */
+  .password-overlay {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.85); z-index: 3000; padding: 20px;
+    align-items: center; justify-content: center;
+  }
+  .password-overlay.active { display: flex; }
+  .password-box {
+    background: white; max-width: 420px; width: 100%;
+    border-radius: 14px; padding: 30px; text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .password-box h2 { color: #1a3a5c; font-size: 22px; margin: 0 0 8px 0; }
+  .password-box p { color: #666; font-size: 14px; margin: 0 0 20px 0; }
+  .password-box input[type="password"] {
+    width: 100%; padding: 14px; border: 2px solid #ddd;
+    border-radius: 8px; font-size: 17px; text-align: center;
+    letter-spacing: 3px; margin-bottom: 15px;
+    font-family: inherit;
+  }
+  .password-box input[type="password"]:focus {
+    outline: none; border-color: #4a90d9;
+  }
+  .password-box button {
+    width: 100%; padding: 14px; margin-top: 0;
+    background: #4a90d9; font-size: 16px;
+  }
+  .password-box button:hover:not(:disabled) { background: #3a7bc8; }
+  .password-box .cancel-btn {
+    background: #95a5a6; margin-top: 10px;
+  }
+  .password-box .cancel-btn:hover { background: #7f8c8d; }
+  .password-box .error-msg {
+    color: #c0392b; font-size: 14px; margin-top: 10px;
+    min-height: 20px; font-weight: 600;
+  }
+
+  /* ===== لوحة الإدارة ===== */
   .admin-overlay {
     display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0,0,0,0.75); z-index: 2000; padding: 20px; overflow-y: auto;
@@ -243,7 +281,7 @@
 
 </div>
 
-<!-- نافذة الضوابط -->
+<!-- ===== نافذة الضوابط ===== -->
 <div class="modal-overlay" id="rulesModal">
   <div class="modal-box">
     <div class="modal-school-logo">
@@ -295,7 +333,19 @@
   </div>
 </div>
 
-<!-- لوحة الإدارة -->
+<!-- ===== نافذة الباسورد ===== -->
+<div class="password-overlay" id="passwordModal">
+  <div class="password-box">
+    <h2>🔐 دخول الإدارة</h2>
+    <p>الرجاء إدخال كلمة المرور للوصول إلى لوحة الإدارة</p>
+    <input type="password" id="passwordInput" placeholder="••••••••••" autocomplete="off">
+    <div class="error-msg" id="passwordError"></div>
+    <button type="button" id="passwordSubmitBtn">دخول</button>
+    <button type="button" class="cancel-btn" id="passwordCancelBtn">إلغاء</button>
+  </div>
+</div>
+
+<!-- ===== لوحة الإدارة ===== -->
 <div class="admin-overlay" id="adminModal">
   <div class="admin-box">
     <h2>🔐 لوحة الإدارة</h2>
@@ -305,7 +355,7 @@
       <a class="admin-link onedrive" href="https://qatareducation-my.sharepoint.com/:x:/g/personal/a_atia1201_education_qa/IQAtrO3zeAYxTbMDk9EDYrvhAc6_AaBW0K1oed1Kw4YndkU?email=a.eldessouki0703%40education.qa&e=wAv96b" target="_blank" rel="noopener">
         📊 فتح ملف Excel على OneDrive
       </a>
-      <a class="admin-link gsheet" id="gsheetLink" href="#" target="_blank" rel="noopener">
+      <a class="admin-link gsheet" href="https://docs.google.com/spreadsheets/d/1LBSZjx4Asp1U4fUqmYksWgl2jFgi7LpS6eYKUQJBZF0/edit?usp=sharing" target="_blank" rel="noopener">
         📗 فتح Google Sheet
       </a>
     </div>
@@ -350,12 +400,11 @@ const SUBJECTS = [
   "التربية الإسلامية", "الدراسات الاجتماعية"
 ];
 
-// ✅ الرابط الجديد
 const API_URL = "https://script.google.com/macros/s/AKfycbyOoIURz8gnoHR9sGKtSjz16-t3ajayy_AA8Do09aWUWtEwnJa5AIYN_6KuAIiwaeuF/exec";
 const SECRET_KEY = "AB2027";
 
-const GSHEET_ID = "ضع_هنا_معرّف_Google_Sheet";
-const GSHEET_URL = "https://docs.google.com/spreadsheets/d/" + GSHEET_ID + "/edit";
+// ✅ باسورد لوحة الإدارة
+const ADMIN_PASSWORD = "ABAH2027@";
 
 const STATS_API_URL = API_URL + "?stats=1&secret=" + SECRET_KEY;
 
@@ -363,6 +412,7 @@ const STATS_API_URL = API_URL + "?stats=1&secret=" + SECRET_KEY;
 let selectedSubjects = [];
 let studentData = null;
 let allStudents = {};
+let adminUnlocked = false; // هل تم إدخال الباسورد بنجاح في هذه الجلسة
 
 // ================== عرض المواد ==================
 const subjectsList = document.getElementById("subjectsList");
@@ -440,21 +490,68 @@ rulesModal.addEventListener("click", (e) => {
 
 printRulesBtn.addEventListener("click", () => window.print());
 
+// ================== نافذة الباسورد ==================
+const passwordModal = document.getElementById("passwordModal");
+const passwordInput = document.getElementById("passwordInput");
+const passwordError = document.getElementById("passwordError");
+const passwordSubmitBtn = document.getElementById("passwordSubmitBtn");
+const passwordCancelBtn = document.getElementById("passwordCancelBtn");
+
+function showPasswordPrompt() {
+  passwordInput.value = "";
+  passwordError.textContent = "";
+  passwordModal.classList.add("active");
+  setTimeout(() => passwordInput.focus(), 100);
+}
+
+function closePasswordPrompt() {
+  passwordModal.classList.remove("active");
+  passwordInput.value = "";
+  passwordError.textContent = "";
+}
+
+passwordSubmitBtn.addEventListener("click", tryUnlockAdmin);
+passwordInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") tryUnlockAdmin();
+});
+
+passwordCancelBtn.addEventListener("click", closePasswordPrompt);
+
+passwordModal.addEventListener("click", (e) => {
+  if (e.target === passwordModal) closePasswordPrompt();
+});
+
+function tryUnlockAdmin() {
+  const entered = passwordInput.value;
+  if (entered === ADMIN_PASSWORD) {
+    adminUnlocked = true;
+    closePasswordPrompt();
+    openAdminPanel();
+  } else {
+    passwordError.textContent = "❌ كلمة المرور غير صحيحة";
+    passwordInput.value = "";
+    passwordInput.focus();
+  }
+}
+
 // ================== لوحة الإدارة ==================
 const adminModal = document.getElementById("adminModal");
 const adminCloseBtn = document.getElementById("adminCloseBtn");
 const refreshStatsBtn = document.getElementById("refreshStatsBtn");
-const gsheetLink = document.getElementById("gsheetLink");
 
-gsheetLink.href = GSHEET_URL;
-
+// آلية الفتح 1: Ctrl+Shift+A → تطلب باسورد
 document.addEventListener("keydown", (e) => {
   if (e.ctrlKey && e.shiftKey && (e.key === "A" || e.key === "a")) {
     e.preventDefault();
-    openAdminPanel();
+    if (adminUnlocked) {
+      openAdminPanel();
+    } else {
+      showPasswordPrompt();
+    }
   }
 });
 
+// آلية الفتح 2: 5 نقرات على الشعار → تطلب باسورد
 let logoClickCount = 0;
 let logoClickTimer = null;
 document.getElementById("headerLogo").addEventListener("click", () => {
@@ -463,7 +560,11 @@ document.getElementById("headerLogo").addEventListener("click", () => {
   logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 1500);
   if (logoClickCount >= 5) {
     logoClickCount = 0;
-    openAdminPanel();
+    if (adminUnlocked) {
+      openAdminPanel();
+    } else {
+      showPasswordPrompt();
+    }
   }
 });
 
@@ -563,8 +664,6 @@ document.getElementById("studentId").addEventListener("input", function() {
   const classF = document.getElementById("studentClass");
   const phoneF = document.getElementById("phone");
 
-  console.log("🔍 بحث عن:", id, "→ النتيجة:", info);
-
   if (info) {
     nameF.value = info.name;
     classF.value = info.class;
@@ -601,7 +700,6 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
   const msg = document.getElementById("message");
   const studentId = document.getElementById("studentId").value.trim();
 
-  // ✅ الفصل بفاصلة منقوطة بعد كل مادة حتى الأخيرة
   const subjectsText = selectedSubjects.join(";") + ";";
 
   const payload = {
