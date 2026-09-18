@@ -350,11 +350,10 @@ const SUBJECTS = [
   "التربية الإسلامية", "الدراسات الاجتماعية"
 ];
 
-// ✅ الرابط الجديد (في سطر واحد، بدون فواصل)
-const API_URL = "https://script.google.com/macros/s/AKfycby5OTrx8A86RFtSBmKJjQonWu1-nWC595kbLTCa96KxQy1qpEwBExrpe0_yjV4sdSlf/exec";
+// ✅ الرابط الجديد
+const API_URL = "https://script.google.com/macros/s/AKfycbyOoIURz8gnoHR9sGKtSjz16-t3ajayy_AA8Do09aWUWtEwnJa5AIYN_6KuAIiwaeuF/exec";
 const SECRET_KEY = "AB2027";
 
-// معرّف Google Sheet (ضعه هنا)
 const GSHEET_ID = "ضع_هنا_معرّف_Google_Sheet";
 const GSHEET_URL = "https://docs.google.com/spreadsheets/d/" + GSHEET_ID + "/edit";
 
@@ -365,7 +364,7 @@ let selectedSubjects = [];
 let studentData = null;
 let allStudents = {};
 
-// ================== عرض المواد (يعمل فوراً) ==================
+// ================== عرض المواد ==================
 const subjectsList = document.getElementById("subjectsList");
 SUBJECTS.forEach((sub) => {
   const div = document.createElement("div");
@@ -602,13 +601,16 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
   const msg = document.getElementById("message");
   const studentId = document.getElementById("studentId").value.trim();
 
+  // ✅ الفصل بفاصلة منقوطة بعد كل مادة حتى الأخيرة
+  const subjectsText = selectedSubjects.join(";") + ";";
+
   const payload = {
     secret: SECRET_KEY,
     studentId: studentId,
     studentName: studentData.name,
     studentClass: studentData.class,
     phone: document.getElementById("phone").value.trim(),
-    subjects: selectedSubjects,
+    subjects: subjectsText,
     subjectCount: selectedSubjects.length,
     agreement: "Yes"
   };
