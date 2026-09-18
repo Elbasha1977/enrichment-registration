@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تسجيل الصفوف الإثرائية</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+  .container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  h1 { color: #1a3a5c; text-align: center; font-size: 22px; margin-bottom: 25px; }
+  label { display: block; margin: 15px 0 6px; font-weight: 600; color: #333; }
+  input[type="text"], input[type="tel"] { width: 100%; padding: 11px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; }
+  input[readonly] { background: #f5f7fa; color: #666; }
+  .ltr { direction: ltr; text-align: left; }
+  .subjects { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  .subject-item { padding: 12px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; background: #fafafa; text-align: center; transition: all 0.2s; user-select: none; }
+  .subject-item:hover { border-color: #4a90d9; }
+  .subject-item.selected { background: #4a90d9; color: white; border-color: #3a7bc8; }
+  .subject-item.disabled { opacity: 0.4; cursor: not-allowed; }
+  .agreement { margin-top: 20px; display: flex; align-items: flex-start; gap: 10px; }
+  .agreement input { margin-top: 3px; }
+  .agreement label { margin: 0; font-weight: normal; cursor: pointer; }
+  button { width: 100%; padding: 14px; margin-top: 25px; background: #27ae60; color: white; border: none; border-radius: 8px; font-size: 17px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+  button:hover:not(:disabled) { background: #219a52; }
+  button:disabled { background: #bdc3c7; cursor: not-allowed; }
+  .msg { margin-top: 15px; padding: 12px; border-radius: 8px; text-align: center; display: none; font-weight: 600; }
+  .msg.error { background: #fdecea; color: #c0392b; display: block; }
+  .msg.success { background: #eafaf1; color: #27ae60; display: block; }
+  .msg.info { background: #fff3cd; color: #856404; display: block; }
+  .counter { display: block; margin-top: 8px; color: #666; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>تسجيل الصفوف الإثرائية</h1>
+
+  <label>الرقم الشخصي للطالب</label>
+  <input type="text" id="studentId" placeholder="أدخل الرقم الشخصي" autocomplete="off">
+
+  <label>اسم الطالب</label>
+  <input type="text" id="studentName" readonly>
+
+  <label>الصف</label>
+  <input type="text" id="studentClass" readonly>
+
+  <label>رقم الهاتف (بالإنجليزية فقط)</label>
+  <input type="tel" id="phone" class="ltr" placeholder="05xxxxxxxx" maxlength="15">
+
+  <label>اختر 3 مواد دراسية فقط</label>
+  <div class="subjects" id="subjectsList"></div>
+  <small class="counter" id="counter">تم اختيار 0 من 3</small>
+
+  <div class="agreement">
+    <input type="checkbox" id="agreement">
+    <label for="agreement">أوافق على الالتزام بضوابط الصفوف الإثرائية</label>
+  </div>
+
+  <button id="submitBtn" disabled>إرسال</button>
+  <div id="message" class="msg"></div>
+</div>
+
+<script>
+// ================== الإعدادات ==================
+const SUBJECTS = [
+  "الرياضيات", "العلوم", "اللغة العربية", "اللغة الإنجليزية",
+  "التربية الإسلامية", "الدراسات الاجتماعية"
+];
+
+// ⚠️ غيّر هذين السطرين
+const API_URL = "https://script.google.com/macros/s/AKfycbwLguDKprd1gUTqkEt5EzlJqNAuRiV4bNpSEVJVmrK4upnzd9CYWJPlnCYts6_9xAw3/exec
+
+";
+const SECRET_KEY = "AB2027"; // نفس القيمة الموجودة في Apps Script
+
+// ================== المتغيرات ==================
+let selectedSubjects = [];
+let studentData = null;
+let allStudents = {};
+
+// ================== تحميل الطلاب ==================
+fetch("students.json")
+  .then(r => r.json())
+  .then(data => { allStudents = data; })
+  .catch(e => console.error("فشل تحميل students.json", e));
+
+// ================== عرض المواد ==================
+const subjectsList = document.getElementById("subjectsList");
+SUBJECTS.forEach((sub) => {
+  const div = document.createElement("div");
+  div.className = "subject-item";
+  div.textContent = sub;
+  div.onclick = () => toggleSubject(div, sub);
+  subjectsList.appendChild(div);
+});
+
+function toggleSubject(el, sub) {
+  if (el.classList.contains("selected")) {
+    el.classList.remove("selected");
+    selectedSubjects = selectedSubjects.filter(s => s !== sub);
+  } else {
+    if (selectedSubjects.length >= 3) return;
+    el.classList.add("selected");
+    selectedSubjects.push(sub);
+  }
+  document.querySelectorAll(".subject-item").forEach(d => {
+    if (!d.classList.contains("selected")) {
+      d.classList.toggle("disabled", selectedSubjects.length >= 3);
+    }
+  });
+  document.getElementById("counter").textContent = `تم اختيار ${selectedSubjects.length} من 3`;
+  checkForm();
+}
+
+// ================== إدخال الرقم الشخصي ==================
+document.getElementById("studentId").addEventListener("input", function() {
+  const id = this.value.trim();
+  const info = allStudents[id];
+  const nameF = document.getElementById("studentName");
+  const classF = document.getElementById("studentClass");
+  const phoneF = document.getElementById("phone");
+
+  if (info) {
+    nameF.value = info.name;
+    classF.value = info.class;
+    phoneF.value = info.phone || "";
+    studentData = info;
+  } else {
+    nameF.value = "";
+    classF.value = "";
+    studentData = null;
+  }
+  checkForm();
+});
+
+// ================== الهاتف: أرقام إنجليزية فقط ==================
+document.getElementById("phone").addEventListener("input", function() {
+  this.value = this.value.replace(/[^0-9+\- ]/g, "");
+  checkForm();
+});
+
+document.getElementById("agreement").addEventListener("change", checkForm);
+
+function checkForm() {
+  const ok =
+    document.getElementById("studentId").value.trim() &&
+    studentData &&
+    document.getElementById("phone").value.trim().length >= 8 &&
+    selectedSubjects.length === 3 &&
+    document.getElementById("agreement").checked;
+  document.getElementById("submitBtn").disabled = !ok;
+}
+
+// ================== الإرسال ==================
+document.getElementById("submitBtn").addEventListener("click", async () => {
+  const msg = document.getElementById("message");
+  const studentId = document.getElementById("studentId").value.trim();
+
+  const payload = {
+    secret: SECRET_KEY,
+    studentId: studentId,
+    studentName: studentData.name,
+    studentClass: studentData.class,
+    phone: document.getElementById("phone").value.trim(),
+    subjects: selectedSubjects,
+    subjectCount: selectedSubjects.length,
+    agreement: "Yes"
+  };
+
+  try {
+    msg.className = "msg info";
+    msg.textContent = "جاري الإرسال...";
+
+    // نستخدم text/plain لتجنب preflight CORS (Apps Script لا يدعمه جيداً)
+    const res = await fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    if (data.error) throw new Error(data.error);
+
+    msg.className = "msg success";
+    msg.textContent = "تم التسجيل بنجاح ✅";
+    document.getElementById("submitBtn").disabled = true;
+    document.querySelectorAll("input, .subject-item").forEach(el => {
+      if (el.tagName === "INPUT") el.disabled = true;
+      else el.classList.add("disabled");
+    });
+
+  } catch (err) {
+    msg.className = "msg error";
+    msg.textContent = err.message || "حدث خطأ، حاول لاحقاً";
+  }
+});
+</script>
+</body>
+</html>
