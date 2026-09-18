@@ -67,21 +67,36 @@ const SUBJECTS = [
   "التربية الإسلامية", "الدراسات الاجتماعية"
 ];
 
-// ⚠️ غيّر هذين السطرين
-const API_URL = "https://script.google.com/macros/s/AKfycbwLguDKprd1gUTqkEt5EzlJqNAuRiV4bNpSEVJVmrK4upnzd9CYWJPlnCYts6_9xAw3/exec
-
-";
-const SECRET_KEY = "AB2027"; // نفس القيمة الموجودة في Apps Script
+// ⚠️ تأكد أن الرابط في سطر واحد بدون فواصل أسطر
+const API_URL = "https://script.google.com/macros/s/AKfycbwLguDKprd1gUTqkEt5EzlJqNAuRiV4bNpSEVJVmrK4upnzd9CYWJPlnCYts6_9xAw3/exec";
+const SECRET_KEY = "AB2027";
 
 // ================== المتغيرات ==================
 let selectedSubjects = [];
 let studentData = null;
 let allStudents = {};
 
-// ================== تحميل الطلاب ==================
+// ================== تحميل الطلاب (مع تحويل المصفوفة إلى كائن) ==================
 fetch("students.json")
   .then(r => r.json())
-  .then(data => { allStudents = data; })
+  .then(data => {
+    allStudents = {};
+    // دعم الحالتين: مصفوفة أو كائن جاهز
+    if (Array.isArray(data)) {
+      data.forEach(item => {
+        const id = String(item.QID || item.id || item.studentId || "").trim();
+        if (!id) return;
+        allStudents[id] = {
+          name: item.NAME || item.name || "",
+          class: item.Class || item.class || "",
+          phone: item["Phone Number"] || item.phone || ""
+        };
+      });
+    } else {
+      allStudents = data;
+    }
+    console.log("تم تحميل", Object.keys(allStudents).length, "طالب");
+  })
   .catch(e => console.error("فشل تحميل students.json", e));
 
 // ================== عرض المواد ==================
@@ -171,7 +186,6 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
     msg.className = "msg info";
     msg.textContent = "جاري الإرسال...";
 
-    // نستخدم text/plain لتجنب preflight CORS (Apps Script لا يدعمه جيداً)
     const res = await fetch(API_URL, {
       method: "POST",
       body: JSON.stringify(payload)
