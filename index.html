@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تسجيل الصفوف الإثرائية</title>
+<title>تسجيل الصفوف الإثرائية - للعام الأكاديمي 2026-2027 الفصل الدراسي الأول</title>
 <style>
   * { box-sizing: border-box; }
   body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
@@ -13,7 +13,9 @@
   .header-logo { text-align: center; margin-bottom: 20px; }
   .header-logo img { max-width: 100%; height: auto; max-height: 140px; }
 
-  h1 { color: #1a3a5c; text-align: center; font-size: 22px; margin-bottom: 25px; }
+  h1 { color: #1a3a5c; text-align: center; font-size: 20px; margin-bottom: 8px; line-height: 1.5; }
+  .subtitle { text-align: center; color: #4a90d9; font-size: 16px; font-weight: 600; margin-bottom: 25px; }
+
   label { display: block; margin: 15px 0 6px; font-weight: 600; color: #333; }
   input[type="text"], input[type="tel"] { width: 100%; padding: 11px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; }
   input[readonly] { background: #f5f7fa; color: #666; }
@@ -35,31 +37,122 @@
   .msg.info { background: #fff3cd; color: #856404; display: block; }
   .counter { display: block; margin-top: 8px; color: #666; font-size: 14px; }
 
-  /* ===== تذييل المطوّر ===== */
-  .footer-dev {
+  /* ===== زر الضوابط ===== */
+  .rules-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: #4a90d9;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .rules-btn:hover { background: #3a7bc8; }
+
+  /* ===== نافذة الضوابط ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  .modal-overlay.active { display: flex; align-items: flex-start; justify-content: center; }
+  .modal-box {
+    background: white;
+    max-width: 700px;
+    width: 100%;
+    margin: auto;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-box h2 {
+    color: #1a3a5c;
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #4a90d9;
+  }
+  .modal-box h3 {
+    color: #4a90d9;
+    font-size: 19px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  .modal-box ol { padding-right: 25px; margin: 0; }
+  .modal-box ol li {
+    font-size: 17px;
+    line-height: 1.9;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .modal-box .agreement-box {
+    background: #fff8e1;
+    border: 2px solid #ffc107;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 20px;
+  }
+  .modal-box .agreement-box h3 { margin-top: 0; color: #b8860b; }
+  .modal-box .agreement-box p { font-size: 17px; line-height: 1.9; color: #333; font-weight: 500; margin: 0; }
+  .close-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .close-btn:hover { background: #c0392b; }
+
+  /* ===== تذييل المطوّرين والمسؤولين ===== */
+  .footer-team {
     margin-top: 35px;
     padding-top: 20px;
     border-top: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .team-member {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 15px;
     text-align: right;
   }
-  .footer-dev img {
+  .team-member img {
     width: 70px;
     height: 70px;
     border-radius: 50%;
     object-fit: cover;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     border: 3px solid #4a90d9;
+    flex-shrink: 0;
   }
-  .footer-dev .dev-text {
+  .team-member .member-text {
     font-size: 14px;
     color: #555;
     line-height: 1.6;
   }
-  .footer-dev .dev-text strong { color: #1a3a5c; }
+  .team-member .member-text strong { color: #1a3a5c; font-size: 15px; }
+  .team-member .member-role { color: #4a90d9; font-weight: 600; font-size: 13px; }
 </style>
 </head>
 <body>
@@ -71,6 +164,7 @@
   </div>
 
   <h1>تسجيل الصفوف الإثرائية</h1>
+  <div class="subtitle">للعام الأكاديمي 2026-2027 - الفصل الدراسي الأول</div>
 
   <label>الرقم الشخصي للطالب</label>
   <input type="text" id="studentId" placeholder="أدخل الرقم الشخصي" autocomplete="off">
@@ -88,6 +182,9 @@
   <div class="subjects" id="subjectsList"></div>
   <small class="counter" id="counter">تم اختيار 0 من 3</small>
 
+  <!-- زر الضوابط -->
+  <button type="button" class="rules-btn" id="showRulesBtn">📋 عرض ضوابط الصفوف الإثرائية</button>
+
   <div class="agreement">
     <input type="checkbox" id="agreement">
     <label for="agreement">أوافق على الالتزام بضوابط الصفوف الإثرائية</label>
@@ -96,16 +193,74 @@
   <button id="submitBtn" disabled>إرسال</button>
   <div id="message" class="msg"></div>
 
-  <!-- ===== تذييل المطوّر ===== -->
-  <div class="footer-dev">
-    <img src="https://i.postimg.cc/L5htcFQM/Screenshot-2025-09-24-164652.jpg" alt="المطوّر">
-    <div class="dev-text">
-      تم التصميم بواسطة<br>
-      <strong>عبدالباسط عطية</strong><br>
-      العام الأكاديمي 2026-2027
+  <!-- ===== تذييل المسؤولين والمطوّر ===== -->
+  <div class="footer-team">
+
+    <div class="team-member">
+      <img src="https://i.postimg.cc/Cx64sWZD/Whats-App-Image-2026-09-18-at-7-08-53-PM.jpg" alt="مسؤول الصفوف الإثرائية">
+      <div class="member-text">
+        <span class="member-role">مسؤول الصفوف الإثرائية</span><br>
+        <strong>الأستاذ أحمد الدسوقي</strong>
+      </div>
     </div>
+
+    <div class="team-member">
+      <img src="https://i.postimg.cc/L5htcFQM/Screenshot-2025-09-24-164652.jpg" alt="المطوّر">
+      <div class="member-text">
+        <span class="member-role">تم التصميم بواسطة</span><br>
+        <strong>الأستاذ عبدالباسط عطية</strong><br>
+        العام الأكاديمي 2026-2027
+      </div>
+    </div>
+
   </div>
 
+</div>
+
+<!-- ===== نافذة الضوابط ===== -->
+<div class="modal-overlay" id="rulesModal">
+  <div class="modal-box">
+    <h2>ضوابط الصفوف الإثرائية</h2>
+
+    <h3>أولاً: ضوابط التسجيل في الصفوف الإثرائية</h3>
+    <ol>
+      <li>يحق للطالب التسجيل باستخدام الرقم الشخصي مرة واحدة فقط.</li>
+      <li>يلتزم الطالب بإدخال جميع البيانات المطلوبة بصورة صحيحة ودقيقة.</li>
+      <li>يحق للطالب اختيار ثلاث مواد كحد أقصى عند التسجيل.</li>
+      <li>يلتزم الطالب بالتسجيل خلال الفترة الزمنية المحددة والمعلنة من قبل المدرسة.</li>
+      <li>لن يتم قبول أي طلب تسجيل بعد انتهاء فترة التسجيل المحددة.</li>
+      <li>لا يحق للطالب التسجيل في مادة لم يخترها أثناء فترة التسجيل.</li>
+      <li>يتحمل الطالب مسؤولية التأكد من صحة المواد التي قام باختيارها قبل إرسال طلب التسجيل.</li>
+      <li>يلتزم الطالب بمتابعة الإعلانات المدرسية المتعلقة بمواعيد ومقرات الصفوف الإثرائية.</li>
+      <li>يجوز للمدرسة تعديل أو إلغاء أي مجموعة إثرائية عند عدم اكتمال العدد المطلوب.</li>
+      <li>تعتبر عملية التسجيل موافقة من الطالب على جميع ضوابط الصفوف الإثرائية.</li>
+    </ol>
+
+    <h3>ثانياً: ضوابط الحضور والالتزام في الصفوف الإثرائية</h3>
+    <ol>
+      <li>الالتزام بالحضور في الموعد المحدد للصف الإثرائي.</li>
+      <li>الالتزام بتعليمات المعلم واحترام الأنظمة المدرسية.</li>
+      <li>عدم التأخر عن بداية الحصة إلا بعذر مقبول.</li>
+      <li>عدم إضاعة وقت الحصة في أمور لا تتعلق بالتعلم.</li>
+      <li>المشاركة الإيجابية في الأنشطة والمهام التعليمية.</li>
+      <li>إحضار الأدوات والمواد المطلوبة للحصة.</li>
+      <li>المحافظة على الهدوء والانضباط داخل الصف.</li>
+      <li>احترام المعلم والزملاء والتعامل معهم بأسلوب لائق.</li>
+      <li>عدم استخدام الهاتف المحمول أو أي أجهزة إلكترونية دون إذن المعلم.</li>
+      <li>المحافظة على ممتلكات المدرسة ومرافقها.</li>
+      <li>الالتزام بإنجاز الأنشطة والتكليفات المطلوبة خلال الحصة.</li>
+      <li>عدم مغادرة الصف الإثرائي إلا بعد استئذان المعلم.</li>
+      <li>الحرص على الاستفادة من الوقت المخصص للبرنامج الإثرائي وتحقيق أهدافه.</li>
+      <li>يحق للمدرسة استبعاد الطالب من البرنامج الإثرائي في حال تكرار الغياب أو عدم الالتزام بالضوابط والأنظمة المعتمدة.</li>
+    </ol>
+
+    <div class="agreement-box">
+      <h3>إقرار الطالب وولي الأمر</h3>
+      <p>أقر بأنني اطلعت على ضوابط التسجيل والحضور الخاصة بالصفوف الإثرائية، وأتعهد بالالتزام بها طوال فترة البرنامج.</p>
+    </div>
+
+    <button type="button" class="close-btn" id="closeRulesBtn">إغلاق</button>
+  </div>
 </div>
 
 <script>
@@ -115,7 +270,6 @@ const SUBJECTS = [
   "التربية الإسلامية", "الدراسات الاجتماعية"
 ];
 
-// ✅ الرابط الجديد
 const API_URL = "https://script.google.com/macros/s/AKfycbypr7Evjccdo0Bt0wqEqKNdXpMwTBXdVUyTn1UBCbNaSdNWD6bEGD4Ve59Eco8anIjq/exec";
 const SECRET_KEY = "AB2027";
 
@@ -145,6 +299,23 @@ fetch("students.json")
     console.log("تم تحميل", Object.keys(allStudents).length, "طالب");
   })
   .catch(e => console.error("فشل تحميل students.json", e));
+
+// ================== نافذة الضوابط ==================
+const rulesModal = document.getElementById("rulesModal");
+document.getElementById("showRulesBtn").addEventListener("click", () => {
+  rulesModal.classList.add("active");
+  document.body.style.overflow = "hidden";
+});
+document.getElementById("closeRulesBtn").addEventListener("click", () => {
+  rulesModal.classList.remove("active");
+  document.body.style.overflow = "";
+});
+rulesModal.addEventListener("click", (e) => {
+  if (e.target === rulesModal) {
+    rulesModal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+});
 
 // ================== عرض المواد ==================
 const subjectsList = document.getElementById("subjectsList");
