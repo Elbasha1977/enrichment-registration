@@ -6,76 +6,198 @@
 <title>تسجيل الصفوف الإثرائية - منتصف الفصل الدراسي الأول للعام الأكاديمي 2026-2027</title>
 <style>
   * { box-sizing: border-box; }
-  body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
-  .container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    margin: 0;
+    padding: 20px 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    min-height: 100vh;
+    background-attachment: fixed;
+  }
+
+  .container {
+    max-width: 620px;
+    margin: auto;
+    background: white;
+    padding: 0;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 6px rgba(255,255,255,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  .container::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 8px;
+    background: linear-gradient(90deg, #f093fb 0%, #f5576c 25%, #f6d365 50%, #4facfe 75%, #43e97b 100%);
+    background-size: 300% 100%;
+    animation: rainbowShift 6s linear infinite;
+    border-radius: 20px 20px 0 0;
+  }
+  @keyframes rainbowShift {
+    0%   { background-position: 0% 0%; }
+    100% { background-position: 300% 0%; }
+  }
+
+  .container-inner { padding: 35px 30px 30px; }
+
+  .date-bar {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    background: linear-gradient(135deg, #e0f7fa, #f3e5f5);
+    padding: 10px 15px; border-radius: 10px; margin-bottom: 20px;
+    font-size: 14px; font-weight: 600; color: #4a148c;
+    border: 1px dashed #ba68c8;
+  }
+  .date-bar .date-icon { font-size: 18px; }
 
   .header-logo { text-align: center; margin-bottom: 20px; cursor: pointer; user-select: none; }
   .header-logo img { max-width: 100%; height: auto; max-height: 140px; }
 
-  h1 { color: #1a3a5c; text-align: center; font-size: 19px; margin-bottom: 8px; line-height: 1.6; }
+  h1 {
+    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center; font-size: 20px; margin-bottom: 8px;
+    line-height: 1.6; font-weight: 800;
+  }
 
-  label { display: block; margin: 15px 0 6px; font-weight: 600; color: #333; }
-  input[type="text"], input[type="tel"] { width: 100%; padding: 11px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; }
+  label { display: block; margin: 15px 0 6px; font-weight: 700; color: #2c3e50; font-size: 14px; }
+  input[type="text"], input[type="tel"] {
+    width: 100%; padding: 12px 14px;
+    border: 2px solid #e0e6ed; border-radius: 10px;
+    font-size: 15px; transition: all 0.25s; background: #fafbfc;
+  }
+  input[type="text"]:focus, input[type="tel"]:focus {
+    outline: none; border-color: #667eea; background: white;
+    box-shadow: 0 0 0 4px rgba(102,126,234,0.15);
+  }
   input[readonly] { background: #f5f7fa; color: #666; }
+  input:disabled { background: #eef2f7; color: #95a5a6; cursor: not-allowed; }
   .ltr { direction: ltr; text-align: left; }
+
   .subjects { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-  .subject-item { padding: 12px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; background: #fafafa; text-align: center; transition: all 0.2s; user-select: none; }
-  .subject-item:hover { border-color: #4a90d9; }
-  .subject-item.selected { background: #4a90d9; color: white; border-color: #3a7bc8; }
-  .subject-item.disabled { opacity: 0.4; cursor: not-allowed; }
-  .agreement { margin-top: 20px; display: flex; align-items: flex-start; gap: 10px; }
-  .agreement input { margin-top: 3px; }
-  .agreement label { margin: 0; font-weight: normal; cursor: pointer; }
-  button { width: 100%; padding: 14px; margin-top: 25px; background: #27ae60; color: white; border: none; border-radius: 8px; font-size: 17px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
-  button:hover:not(:disabled) { background: #219a52; }
-  button:disabled { background: #bdc3c7; cursor: not-allowed; }
-  .msg { margin-top: 15px; padding: 12px; border-radius: 8px; text-align: center; display: none; font-weight: 600; }
+  .subject-item {
+    padding: 13px 10px; border: 2px solid #e0e6ed; border-radius: 10px;
+    cursor: pointer; background: #fafbfc; text-align: center;
+    transition: all 0.2s; user-select: none;
+    font-weight: 600; color: #555; font-size: 14px;
+  }
+  .subject-item:hover:not(.disabled) { border-color: #667eea; background: #f5f7ff; transform: translateY(-1px); }
+  .subject-item.selected {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white; border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102,126,234,0.35);
+  }
+  .subject-item.disabled { opacity: 0.35; cursor: not-allowed; }
+
+  .phone-confirm-box {
+    margin-top: 12px; padding: 14px;
+    background: #f8faff; border: 2px dashed #667eea; border-radius: 10px;
+  }
+  .phone-confirm-box .question {
+    font-weight: 700; color: #2c3e50; margin-bottom: 10px;
+    font-size: 14px; display: flex; align-items: center; gap: 8px;
+  }
+  .phone-choice { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .choice-btn {
+    padding: 11px; border: 2px solid #e0e6ed; border-radius: 10px;
+    background: white; font-weight: 700; font-size: 14px; cursor: pointer;
+    transition: all 0.2s; font-family: inherit; margin: 0; color: #555;
+  }
+  .choice-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+  .choice-btn.yes { border-color: #27ae60; color: #27ae60; }
+  .choice-btn.yes:hover { background: #eafaf1; }
+  .choice-btn.yes.active { background: #27ae60; color: white; border-color: #27ae60; }
+  .choice-btn.no { border-color: #e67e22; color: #e67e22; }
+  .choice-btn.no:hover { background: #fff5eb; }
+  .choice-btn.no.active { background: #e67e22; color: white; border-color: #e67e22; }
+
+  .new-phone-box {
+    display: none; margin-top: 12px; padding: 14px;
+    background: #fff8e1; border: 2px solid #f6d365;
+    border-radius: 10px; animation: fadeIn 0.3s ease;
+  }
+  .new-phone-box.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .new-phone-box label { margin-top: 0; color: #b8860b; }
+
+  .phone-status {
+    margin-top: 10px; padding: 10px 14px; border-radius: 8px;
+    font-size: 13px; font-weight: 700; display: none; text-align: center;
+  }
+  .phone-status.show { display: block; animation: fadeIn 0.3s ease; }
+  .phone-status.ok { background: #eafaf1; color: #27ae60; border: 1px solid #27ae60; }
+  .phone-status.changed { background: #fff5eb; color: #e67e22; border: 1px solid #e67e22; }
+
+  .agreement { margin-top: 20px; display: flex; align-items: flex-start; gap: 10px; padding: 12px; background: #f8faff; border-radius: 10px; }
+  .agreement input { margin-top: 3px; width: 18px; height: 18px; accent-color: #667eea; cursor: pointer; flex-shrink: 0; }
+  .agreement label { margin: 0; font-weight: 600; cursor: pointer; font-size: 14px; color: #2c3e50; }
+
+  button {
+    width: 100%; padding: 15px; margin-top: 25px;
+    background: linear-gradient(135deg, #43e97b, #38f9d7);
+    color: white; border: none; border-radius: 12px;
+    font-size: 17px; font-weight: 800; cursor: pointer;
+    transition: all 0.25s; font-family: inherit;
+    box-shadow: 0 6px 18px rgba(67,233,123,0.35); letter-spacing: 0.5px;
+  }
+  button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(67,233,123,0.45); }
+  button:disabled { background: #bdc3c7; box-shadow: none; cursor: not-allowed; }
+
+  .msg { margin-top: 15px; padding: 14px; border-radius: 10px; text-align: center; display: none; font-weight: 700; font-size: 14px; }
   .msg.error { background: #fdecea; color: #c0392b; display: block; }
   .msg.success { background: #eafaf1; color: #27ae60; display: block; }
   .msg.info { background: #fff3cd; color: #856404; display: block; }
-  .counter { display: block; margin-top: 8px; color: #666; font-size: 14px; }
+  .counter { display: block; margin-top: 8px; color: #666; font-size: 13px; font-weight: 600; }
 
   .rules-btn {
-    width: 100%; padding: 12px; margin-top: 15px;
-    background: #4a90d9; color: white; border: none; border-radius: 8px;
-    font-size: 15px; font-weight: bold; cursor: pointer; transition: background 0.2s;
+    width: 100%; padding: 13px; margin-top: 15px;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: white; border: none; border-radius: 12px;
+    font-size: 15px; font-weight: 800; cursor: pointer;
+    transition: all 0.2s; font-family: inherit;
+    box-shadow: 0 6px 18px rgba(79,172,254,0.3);
   }
-  .rules-btn:hover { background: #3a7bc8; }
+  .rules-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(79,172,254,0.4); }
 
-  .contact-section { margin-top: 25px; padding: 20px; background: #f8fafc; border-radius: 10px; border: 1px solid #e1e8ed; }
-  .contact-section h3 { text-align: center; color: #1a3a5c; font-size: 16px; margin: 0 0 15px 0; }
+  .contact-section { margin-top: 25px; padding: 20px; background: linear-gradient(135deg, #f0f4ff, #fef5ff); border-radius: 14px; border: 2px dashed #c5cae9; }
+  .contact-section h3 { text-align: center; color: #4a148c; font-size: 15px; margin: 0 0 15px 0; font-weight: 800; }
   .contact-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .contact-btn {
     display: flex; align-items: center; justify-content: center; gap: 8px;
-    padding: 12px; border-radius: 8px; font-size: 15px; font-weight: bold;
+    padding: 13px; border-radius: 12px; font-size: 15px; font-weight: 800;
     text-decoration: none; color: white; transition: transform 0.15s, opacity 0.2s;
-    margin: 0; width: 100%; border: none; cursor: pointer;
+    margin: 0; width: 100%; border: none; cursor: pointer; font-family: inherit;
   }
   .contact-btn:hover { transform: translateY(-2px); opacity: 0.95; }
-  .contact-btn.whatsapp { background: #25D366; }
-  .contact-btn.email { background: #EA4335; }
+  .contact-btn.whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); }
+  .contact-btn.email { background: linear-gradient(135deg, #EA4335, #c5221f); }
   .contact-btn svg { width: 20px; height: 20px; fill: white; }
 
   .modal-overlay {
     display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.6); z-index: 1000; padding: 20px; overflow-y: auto;
+    background: rgba(0,0,0,0.65); z-index: 1000; padding: 20px; overflow-y: auto;
   }
   .modal-overlay.active { display: flex; align-items: flex-start; justify-content: center; }
   .modal-box {
     background: white; max-width: 700px; width: 100%; margin: auto;
-    border-radius: 12px; padding: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    border-radius: 16px; padding: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);
     max-height: 90vh; overflow-y: auto;
   }
   .modal-school-logo { text-align: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
   .modal-school-logo img { max-width: 100%; max-height: 90px; height: auto; }
 
   .modal-box h2 { color: #1a3a5c; text-align: center; font-size: 22px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #4a90d9; }
-  .modal-box h3 { color: #4a90d9; font-size: 19px; margin-top: 20px; margin-bottom: 10px; }
+  .modal-box h3 { color: #4a90d9; font-size: 18px; margin-top: 20px; margin-bottom: 10px; padding: 8px 12px; background: #eaf4fd; border-radius: 8px; border-right: 4px solid #4a90d9; }
   .modal-box ol { padding-right: 25px; margin: 0; }
-  .modal-box ol li { font-size: 17px; line-height: 1.9; color: #333; margin-bottom: 8px; font-weight: 500; }
+  .modal-box ol li { font-size: 16px; line-height: 1.9; color: #333; margin-bottom: 8px; font-weight: 500; }
   .modal-box .agreement-box { background: #fff8e1; border: 2px solid #ffc107; border-radius: 8px; padding: 15px; margin-top: 20px; }
-  .modal-box .agreement-box h3 { margin-top: 0; color: #b8860b; }
-  .modal-box .agreement-box p { font-size: 17px; line-height: 1.9; color: #333; font-weight: 500; margin: 0; }
+  .modal-box .agreement-box h3 { margin-top: 0; color: #b8860b; background: transparent; border: none; padding: 0; }
+  .modal-box .agreement-box p { font-size: 16px; line-height: 1.9; color: #333; font-weight: 500; margin: 0; }
 
   .modal-approve {
     background: #eaf4fd; border: 2px solid #4a90d9; border-radius: 8px;
@@ -83,29 +205,31 @@
     gap: 12px; cursor: pointer; user-select: none;
   }
   .modal-approve input[type="checkbox"] { width: 22px; height: 22px; cursor: pointer; accent-color: #4a90d9; flex-shrink: 0; }
-  .modal-approve label { margin: 0; font-size: 17px; font-weight: 600; color: #1a3a5c; cursor: pointer; }
+  .modal-approve label { margin: 0; font-size: 16px; font-weight: 700; color: #1a3a5c; cursor: pointer; }
 
   .modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
-  .print-btn { padding: 14px; background: #4a90d9; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+  .print-btn { padding: 14px; background: #4a90d9; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit; }
   .print-btn:hover { background: #3a7bc8; }
-  .close-btn { padding: 14px; background: #27ae60; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+  .close-btn { padding: 14px; background: #27ae60; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit; }
   .close-btn:hover:not(:disabled) { background: #219a52; }
   .close-btn:disabled { background: #bdc3c7; cursor: not-allowed; }
 
   .footer-team {
-    margin-top: 35px; padding-top: 20px; border-top: 1px solid #eee;
+    margin-top: 30px; padding-top: 20px; border-top: 2px dashed #e0e6ed;
     display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
   }
   .team-member { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; }
   .team-member img {
     width: 90px; height: 90px; border-radius: 50%; object-fit: cover;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.18); border: 3px solid #4a90d9;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #667eea, #764ba2, #f093fb) border-box;
   }
   .team-member .member-text { font-size: 13px; color: #555; line-height: 1.7; }
-  .team-member .member-role { color: #4a90d9; font-weight: 700; font-size: 13px; display: block; }
-  .team-member .member-name { color: #1a3a5c; font-weight: 700; font-size: 14px; display: block; margin-top: 3px; }
+  .team-member .member-role { color: #4a90d9; font-weight: 800; font-size: 13px; display: block; }
+  .team-member .member-name { color: #1a3a5c; font-weight: 800; font-size: 14px; display: block; margin-top: 3px; }
 
-  /* ===== نافذة الباسورد ===== */
   .password-overlay {
     display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0,0,0,0.85); z-index: 3000; padding: 20px;
@@ -122,27 +246,15 @@
   .password-box input[type="password"] {
     width: 100%; padding: 14px; border: 2px solid #ddd;
     border-radius: 8px; font-size: 17px; text-align: center;
-    letter-spacing: 3px; margin-bottom: 15px;
-    font-family: inherit;
+    letter-spacing: 3px; margin-bottom: 15px; font-family: inherit;
   }
-  .password-box input[type="password"]:focus {
-    outline: none; border-color: #4a90d9;
-  }
-  .password-box button {
-    width: 100%; padding: 14px; margin-top: 0;
-    background: #4a90d9; font-size: 16px;
-  }
-  .password-box button:hover:not(:disabled) { background: #3a7bc8; }
-  .password-box .cancel-btn {
-    background: #95a5a6; margin-top: 10px;
-  }
+  .password-box input[type="password"]:focus { outline: none; border-color: #4a90d9; }
+  .password-box button { width: 100%; padding: 14px; margin-top: 0; background: linear-gradient(135deg, #4a90d9, #3a7bc8); font-size: 16px; }
+  .password-box button:hover:not(:disabled) { background: linear-gradient(135deg, #3a7bc8, #2c6bb0); }
+  .password-box .cancel-btn { background: #95a5a6; margin-top: 10px; }
   .password-box .cancel-btn:hover { background: #7f8c8d; }
-  .password-box .error-msg {
-    color: #c0392b; font-size: 14px; margin-top: 10px;
-    min-height: 20px; font-weight: 600;
-  }
+  .password-box .error-msg { color: #c0392b; font-size: 14px; margin-top: 10px; min-height: 20px; font-weight: 700; }
 
-  /* ===== لوحة الإدارة ===== */
   .admin-overlay {
     display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0,0,0,0.75); z-index: 2000; padding: 20px; overflow-y: auto;
@@ -159,7 +271,7 @@
   .admin-link {
     display: flex; align-items: center; justify-content: center; gap: 8px;
     padding: 14px; border-radius: 8px; text-decoration: none;
-    color: white; font-weight: bold; font-size: 15px;
+    color: white; font-weight: 700; font-size: 15px;
     transition: transform 0.15s, opacity 0.2s;
   }
   .admin-link:hover { transform: translateY(-2px); opacity: 0.95; }
@@ -171,6 +283,7 @@
   .stat-card { background: linear-gradient(135deg, #4a90d9, #3a7bc8); color: white; padding: 15px; border-radius: 10px; text-align: center; }
   .stat-card.green { background: linear-gradient(135deg, #27ae60, #219a52); }
   .stat-card.orange { background: linear-gradient(135deg, #f39c12, #e67e22); }
+  .stat-card.purple { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
   .stat-card .stat-value { font-size: 28px; font-weight: bold; line-height: 1; }
   .stat-card .stat-label { font-size: 13px; margin-top: 6px; opacity: 0.95; }
 
@@ -186,15 +299,18 @@
   .subject-row .subject-bar-inner { height: 100%; background: linear-gradient(90deg, #4a90d9, #3a7bc8); transition: width 0.4s ease; }
   .subject-row .subject-count { font-weight: bold; color: #4a90d9; min-width: 50px; text-align: left; font-size: 16px; }
   .admin-empty { text-align: center; padding: 25px; color: #999; font-size: 15px; }
-  .admin-close { display: block; width: 100%; padding: 14px; margin-top: 20px; background: #e74c3c; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+  .admin-close { display: block; width: 100%; padding: 14px; margin-top: 20px; background: #e74c3c; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; font-family: inherit; }
   .admin-close:hover { background: #c0392b; }
 
   @media (max-width: 480px) {
+    .container-inner { padding: 25px 20px; }
     .team-member img { width: 75px; height: 75px; }
-    .modal-box ol li { font-size: 16px; }
+    .modal-box ol li { font-size: 15px; }
     .modal-actions { grid-template-columns: 1fr; }
     .contact-buttons { grid-template-columns: 1fr; }
     .admin-links { grid-template-columns: 1fr; }
+    .phone-choice { grid-template-columns: 1fr; }
+    h1 { font-size: 17px; }
   }
 
   @media print {
@@ -202,92 +318,115 @@
     .modal-box, .modal-box * { visibility: visible; }
     .modal-box { position: absolute; left: 0; top: 0; width: 100%; max-width: 100%; box-shadow: none; max-height: none; overflow: visible; }
     .modal-approve, .modal-actions { display: none !important; }
-    .modal-box ol li { font-size: 14px; line-height: 1.7; }
-    .modal-box h2 { font-size: 20px; }
-    .modal-box h3 { font-size: 17px; }
+    .modal-box ol li { font-size: 13px; line-height: 1.6; }
+    .modal-box h2 { font-size: 19px; }
+    .modal-box h3 { font-size: 16px; }
   }
 </style>
 </head>
 <body>
 <div class="container">
+  <div class="container-inner">
 
-  <div class="header-logo" id="headerLogo">
-    <img src="https://i.postimg.cc/tRm07wZF/MOTTO.png" alt="الدباجة">
-  </div>
-
-  <h1>تسجيل الصفوف الإثرائية - منتصف الفصل الدراسي الأول<br>للعام الأكاديمي 2026-2027</h1>
-
-  <label>الرقم الشخصي للطالب</label>
-  <input type="text" id="studentId" placeholder="أدخل الرقم الشخصي" autocomplete="off">
-
-  <label>اسم الطالب</label>
-  <input type="text" id="studentName" readonly>
-
-  <label>الصف</label>
-  <input type="text" id="studentClass" readonly>
-
-  <label>رقم الهاتف (بالإنجليزية فقط)</label>
-  <input type="tel" id="phone" class="ltr" placeholder="05xxxxxxxx" maxlength="15">
-
-  <label>اختر 3 مواد دراسية فقط</label>
-  <div class="subjects" id="subjectsList"></div>
-  <small class="counter" id="counter">تم اختيار 0 من 3</small>
-
-  <button type="button" class="rules-btn" id="showRulesBtn">📋 عرض ضوابط الصفوف الإثرائية</button>
-
-  <div class="agreement">
-    <input type="checkbox" id="agreement">
-    <label for="agreement">أوافق على الالتزام بضوابط الصفوف الإثرائية</label>
-  </div>
-
-  <button id="submitBtn" disabled>إرسال</button>
-  <div id="message" class="msg"></div>
-
-  <div class="contact-section">
-    <h3>📞 للتواصل مع مسؤول الصفوف الإثرائية</h3>
-    <div class="contact-buttons">
-      <a class="contact-btn whatsapp" href="https://wa.me/97430030869?text=السلام%20عليكم%20أ.%20أحمد%20الدسوقي،%20لدي%20استفسار%20حول%20الصفوف%20الإثرائية" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-        </svg>
-        واتساب
-      </a>
-      <a class="contact-btn email" href="mailto:a.edessouki0703@education.qa?subject=استفسار%20حول%20الصفوف%20الإثرائية" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-        </svg>
-        إيميل
-      </a>
+    <div class="date-bar">
+      <span class="date-icon">📅</span>
+      <span id="todayDate">جاري التحميل...</span>
     </div>
-  </div>
 
-  <div class="footer-team">
-    <div class="team-member">
-      <img src="https://i.postimg.cc/Cx64sWZD/Whats-App-Image-2026-09-18-at-7-08-53-PM.jpg" alt="مسؤول الصفوف الإثرائية">
-      <div class="member-text">
-        <span class="member-role">مسؤول الصفوف الإثرائية</span>
-        <span class="member-name">الأستاذ أحمد الدسوقي</span>
+    <div class="header-logo" id="headerLogo">
+      <img src="https://i.postimg.cc/tRm07wZF/MOTTO.png" alt="الدباجة">
+    </div>
+
+    <h1>تسجيل الصفوف الإثرائية - منتصف الفصل الدراسي الأول<br>للعام الأكاديمي 2026-2027</h1>
+
+    <label>الرقم الشخصي للطالب</label>
+    <input type="text" id="studentId" placeholder="أدخل الرقم الشخصي" autocomplete="off">
+
+    <label>اسم الطالب</label>
+    <input type="text" id="studentName" readonly>
+
+    <label>الصف</label>
+    <input type="text" id="studentClass" readonly>
+
+    <label>رقم الهاتف (بالإنجليزية فقط)</label>
+    <input type="tel" id="phone" class="ltr" placeholder="05xxxxxxxx" maxlength="15">
+
+    <div class="phone-confirm-box" id="phoneConfirmBox" style="display:none;">
+      <div class="question">❓ هل هذا هو رقم التواصل المعتمد مع ولي الأمر؟</div>
+      <div class="phone-choice">
+        <button type="button" class="choice-btn yes" id="phoneYesBtn">✅ نعم، الرقم صحيح</button>
+        <button type="button" class="choice-btn no" id="phoneNoBtn">✏️ لا، أريد تغييره</button>
       </div>
     </div>
-    <div class="team-member">
-      <img src="https://i.postimg.cc/L5htcFQM/Screenshot-2025-09-24-164652.jpg" alt="المطوّر">
-      <div class="member-text">
-        <span class="member-role">تم التصميم بواسطة</span>
-        <span class="member-name">الأستاذ عبدالباسط عطية</span>
-        <span style="display:block; margin-top:3px;">العام الأكاديمي 2026-2027</span>
+
+    <div class="new-phone-box" id="newPhoneBox">
+      <label>📱 رقم التواصل المعتمد الجديد (بالإنجليزية فقط)</label>
+      <input type="tel" id="newPhone" class="ltr" placeholder="05xxxxxxxx" maxlength="15">
+    </div>
+
+    <div class="phone-status" id="phoneStatus"></div>
+
+    <label>اختر 3 مواد دراسية فقط</label>
+    <div class="subjects" id="subjectsList"></div>
+    <small class="counter" id="counter">تم اختيار 0 من 3</small>
+
+    <button type="button" class="rules-btn" id="showRulesBtn">📋 عرض ضوابط الصفوف الإثرائية</button>
+
+    <div class="agreement">
+      <input type="checkbox" id="agreement">
+      <label for="agreement">أوافق على الالتزام بضوابط الصفوف الإثرائية</label>
+    </div>
+
+    <button id="submitBtn" disabled>إرسال</button>
+    <div id="message" class="msg"></div>
+
+    <div class="contact-section">
+      <h3>📞 للتواصل مع مسؤول الصفوف الإثرائية</h3>
+      <div class="contact-buttons">
+        <a class="contact-btn whatsapp" href="https://wa.me/97430030869?text=السلام%20عليكم%20أ.%20أحمد%20الدسوقي،%20لدي%20استفسار%20حول%20الصفوف%20الإثرائية" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+          واتساب
+        </a>
+        <a class="contact-btn email" href="mailto:a.edessouki0703@education.qa?subject=استفسار%20حول%20الصفوف%20الإثرائية" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          إيميل
+        </a>
       </div>
     </div>
-  </div>
 
+    <div class="footer-team">
+      <div class="team-member">
+        <img src="https://i.postimg.cc/Cx64sWZD/Whats-App-Image-2026-09-18-at-7-08-53-PM.jpg" alt="مسؤول الصفوف الإثرائية">
+        <div class="member-text">
+          <span class="member-role">مسؤول الصفوف الإثرائية</span>
+          <span class="member-name">الأستاذ أحمد الدسوقي</span>
+        </div>
+      </div>
+      <div class="team-member">
+        <img src="https://i.postimg.cc/L5htcFQM/Screenshot-2025-09-24-164652.jpg" alt="المطوّر">
+        <div class="member-text">
+          <span class="member-role">تم التصميم بواسطة</span>
+          <span class="member-name">الأستاذ عبدالباسط عطية</span>
+          <span style="display:block; margin-top:3px;">العام الأكاديمي 2026-2027</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
-<!-- ===== نافذة الضوابط ===== -->
+<!-- نافذة الضوابط -->
 <div class="modal-overlay" id="rulesModal">
   <div class="modal-box">
     <div class="modal-school-logo">
       <img src="https://i.postimg.cc/tRm07wZF/MOTTO.png" alt="شعار المدرسة">
     </div>
     <h2>ضوابط الصفوف الإثرائية</h2>
+
     <h3>أولاً: ضوابط التسجيل في الصفوف الإثرائية</h3>
     <ol>
       <li>يحق للطالب التسجيل باستخدام الرقم الشخصي مرة واحدة فقط.</li>
@@ -301,31 +440,43 @@
       <li>يجوز للمدرسة تعديل أو إلغاء أي مجموعة إثرائية عند عدم اكتمال العدد المطلوب.</li>
       <li>تعتبر عملية التسجيل موافقة من الطالب على جميع ضوابط الصفوف الإثرائية.</li>
     </ol>
-    <h3>ثانياً: ضوابط الحضور والالتزام في الصفوف الإثرائية</h3>
+
+    <h3>ثانياً: ضوابط التزام الطالب داخل الصفوف الإثرائية</h3>
     <ol>
-      <li>الالتزام بالحضور في الموعد المحدد للصف الإثرائي.</li>
-      <li>الالتزام بتعليمات المعلم واحترام الأنظمة المدرسية.</li>
-      <li>عدم التأخر عن بداية الحصة إلا بعذر مقبول.</li>
-      <li>عدم إضاعة وقت الحصة في أمور لا تتعلق بالتعلم.</li>
-      <li>المشاركة الإيجابية في الأنشطة والمهام التعليمية.</li>
-      <li>إحضار الأدوات والمواد المطلوبة للحصة.</li>
-      <li>المحافظة على الهدوء والانضباط داخل الصف.</li>
-      <li>احترام المعلم والزملاء والتعامل معهم بأسلوب لائق.</li>
-      <li>عدم استخدام الهاتف المحمول أو أي أجهزة إلكترونية دون إذن المعلم.</li>
-      <li>المحافظة على ممتلكات المدرسة ومرافقها.</li>
-      <li>الالتزام بإنجاز الأنشطة والتكليفات المطلوبة خلال الحصة.</li>
-      <li>عدم مغادرة الصف الإثرائي إلا بعد استئذان المعلم.</li>
-      <li>الحرص على الاستفادة من الوقت المخصص للبرنامج الإثرائي وتحقيق أهدافه.</li>
-      <li>يحق للمدرسة استبعاد الطالب من البرنامج الإثرائي في حال تكرار الغياب أو عدم الالتزام بالضوابط والأنظمة المعتمدة.</li>
+      <li>الالتزام بالحضور في جميع المواعيد المحددة للصفوف الإثرائية.</li>
+      <li>الحضور في الوقت المحدد وعدم التأخر أو الانصراف قبل نهاية الحصة إلا بإذن.</li>
+      <li>الالتزام بالزي المدرسي والتعليمات واللوائح المعمول بها في المدرسة.</li>
+      <li>إحضار الأدوات والمواد المطلوبة للمشاركة في برنامج الصفوف الإثرائية.</li>
+      <li>المشاركة الفعالة في الأنشطة والواجبات والتطبيقات الإثرائية.</li>
+      <li>المحافظة على مرافق المدرسة وممتلكاتها.</li>
+      <li>الالتزام بحسن التعامل مع المعلمين والزملاء.</li>
+      <li>عدم استخدام الأجهزة أو الهواتف داخل الصفوف، وتسليم الهاتف للمشرف في الاستقبال واستلامه بعد الانتهاء من حصص الصفوف الإثرائية.</li>
+      <li>الالتزام بتعليمات الأمن والسلامة داخل المدرسة.</li>
+      <li>في حال تكرار الغياب أو عدم الالتزام، تطبق الإجراءات الإدارية بشطب الطالب من الصفوف الإثرائية.</li>
     </ol>
+
+    <h3>ثالثاً: ضوابط التزام ولي الأمر</h3>
+    <ol>
+      <li>الاطلاع على أهداف ومواعيد الصفوف الإثرائية والموافقة على مشاركة الطالب.</li>
+      <li>متابعة انتظام الطالب في الحضور والالتزام بالمواعيد.</li>
+      <li>توفير المستلزمات المطلوبة للطالب.</li>
+      <li>إبلاغ المدرسة مسبقًا عن أي ظرف يمنع الطالب من الحضور، مع تقديم ما يثبت العذر عند طلب المدرسة.</li>
+      <li>متابعة مستوى الطالب ومشاركته وتشجيعه على الاستفادة من البرنامج.</li>
+      <li>الالتزام بمواعيد استلام الطالب وانصرافه.</li>
+      <li>التعاون مع إدارة المدرسة والمعلمين عند وجود ملاحظات متعلقة بالحضور أو السلوك أو التحصيل.</li>
+      <li>الالتزام بالتعليمات والإجراءات التي تحددها المدرسة بشأن البرنامج.</li>
+    </ol>
+
     <div class="agreement-box">
       <h3>إقرار الطالب وولي الأمر</h3>
       <p>أقر بأنني اطلعت على ضوابط التسجيل والحضور الخاصة بالصفوف الإثرائية، وأتعهد بالالتزام بها طوال فترة البرنامج.</p>
     </div>
+
     <label class="modal-approve" for="modalAgree">
       <input type="checkbox" id="modalAgree">
       <span>أوافق على جميع الضوابط المذكورة أعلاه</span>
     </label>
+
     <div class="modal-actions">
       <button type="button" class="print-btn" id="printRulesBtn">🖨️ طباعة الضوابط</button>
       <button type="button" class="close-btn" id="closeRulesBtn" disabled>إغلاق</button>
@@ -333,7 +484,7 @@
   </div>
 </div>
 
-<!-- ===== نافذة الباسورد ===== -->
+<!-- نافذة الباسورد -->
 <div class="password-overlay" id="passwordModal">
   <div class="password-box">
     <h2>🔐 دخول الإدارة</h2>
@@ -345,7 +496,7 @@
   </div>
 </div>
 
-<!-- ===== لوحة الإدارة ===== -->
+<!-- لوحة الإدارة -->
 <div class="admin-overlay" id="adminModal">
   <div class="admin-box">
     <h2>🔐 لوحة الإدارة</h2>
@@ -360,9 +511,7 @@
       </a>
     </div>
 
-    <button class="admin-link refresh" id="refreshStatsBtn" style="width:100%; margin-bottom:20px;">
-      🔄 تحديث الإحصائيات
-    </button>
+    <button class="admin-link refresh" id="refreshStatsBtn" style="width:100%; margin-bottom:20px;">🔄 تحديث الإحصائيات</button>
 
     <div class="admin-stats">
       <div class="stat-card">
@@ -376,6 +525,10 @@
       <div class="stat-card orange">
         <div class="stat-value" id="statSubjects">-</div>
         <div class="stat-label">عدد المواد المسجلة</div>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-value" id="statPhoneChanged">-</div>
+        <div class="stat-label">طلاب غيّروا رقم الهاتف</div>
       </div>
     </div>
 
@@ -400,19 +553,31 @@ const SUBJECTS = [
   "التربية الإسلامية", "الدراسات الاجتماعية"
 ];
 
-const API_URL = "https://script.google.com/macros/s/AKfycbyOoIURz8gnoHR9sGKtSjz16-t3ajayy_AA8Do09aWUWtEwnJa5AIYN_6KuAIiwaeuF/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbymngzA6mUFqiS8I4oknf9VPwRYmR9d43cKQMFyLhJm3B5qMi17dclcoE0qYhc6mKQJ/exec";
 const SECRET_KEY = "AB2027";
-
-// ✅ باسورد لوحة الإدارة
 const ADMIN_PASSWORD = "ABAH2027@";
-
 const STATS_API_URL = API_URL + "?stats=1&secret=" + SECRET_KEY;
 
 // ================== المتغيرات ==================
 let selectedSubjects = [];
 let studentData = null;
 let allStudents = {};
-let adminUnlocked = false; // هل تم إدخال الباسورد بنجاح في هذه الجلسة
+let adminUnlocked = false;
+let phoneConfirmed = false;
+let phoneChanged = false;
+let finalPhone = "";
+
+// ================== عرض اليوم والتاريخ ==================
+(function displayToday() {
+  const daysAr = ["الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+  const monthsAr = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+  const now = new Date();
+  const dayName = daysAr[now.getDay()];
+  const d = now.getDate();
+  const m = monthsAr[now.getMonth()];
+  const y = now.getFullYear();
+  document.getElementById("todayDate").textContent = `${dayName}، ${d} ${m} ${y}`;
+})();
 
 // ================== عرض المواد ==================
 const subjectsList = document.getElementById("subjectsList");
@@ -426,10 +591,7 @@ SUBJECTS.forEach((sub) => {
 
 // ================== تحميل الطلاب ==================
 fetch("students.json")
-  .then(r => {
-    if (!r.ok) throw new Error("HTTP " + r.status);
-    return r.json();
-  })
+  .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
   .then(data => {
     allStudents = {};
     if (Array.isArray(data)) {
@@ -448,6 +610,172 @@ fetch("students.json")
     console.log("✅ تم تحميل", Object.keys(allStudents).length, "طالب");
   })
   .catch(e => console.error("❌ فشل تحميل students.json:", e));
+
+// ================== إدخال الرقم الشخصي ==================
+document.getElementById("studentId").addEventListener("input", function() {
+  const id = this.value.trim();
+  const info = allStudents[id];
+  const nameF = document.getElementById("studentName");
+  const classF = document.getElementById("studentClass");
+  const phoneF = document.getElementById("phone");
+
+  phoneConfirmed = false;
+  phoneChanged = false;
+  finalPhone = "";
+  document.getElementById("newPhoneBox").classList.remove("active");
+  document.getElementById("phoneStatus").className = "phone-status";
+  document.getElementById("phoneStatus").textContent = "";
+  document.getElementById("newPhone").value = "";
+  document.getElementById("phoneYesBtn").classList.remove("active");
+  document.getElementById("phoneNoBtn").classList.remove("active");
+  document.getElementById("phone").disabled = false;
+
+  if (info) {
+    nameF.value = info.name;
+    classF.value = info.class;
+    phoneF.value = info.phone || "";
+    studentData = info;
+    document.getElementById("phoneConfirmBox").style.display = "block";
+  } else {
+    nameF.value = "";
+    classF.value = "";
+    studentData = null;
+    document.getElementById("phoneConfirmBox").style.display = "none";
+  }
+  checkForm();
+});
+
+// ================== أزرار تأكيد الرقم ==================
+const phoneYesBtn = document.getElementById("phoneYesBtn");
+const phoneNoBtn = document.getElementById("phoneNoBtn");
+const newPhoneBox = document.getElementById("newPhoneBox");
+const newPhoneInput = document.getElementById("newPhone");
+const phoneStatus = document.getElementById("phoneStatus");
+const phoneInput = document.getElementById("phone");
+
+phoneYesBtn.addEventListener("click", () => {
+  phoneConfirmed = true;
+  phoneChanged = false;
+  finalPhone = phoneInput.value.trim();
+  phoneInput.disabled = true;
+  newPhoneBox.classList.remove("active");
+  phoneYesBtn.classList.add("active");
+  phoneNoBtn.classList.remove("active");
+  phoneStatus.className = "phone-status show ok";
+  phoneStatus.textContent = "✅ تم تأكيد الرقم المعتمد وسيُستخدم في التسجيل";
+  checkForm();
+});
+
+phoneNoBtn.addEventListener("click", () => {
+  phoneConfirmed = false;
+  phoneChanged = true;
+  phoneInput.disabled = true;
+  newPhoneBox.classList.add("active");
+  phoneYesBtn.classList.remove("active");
+  phoneNoBtn.classList.add("active");
+  phoneStatus.className = "phone-status";
+  phoneStatus.textContent = "";
+  finalPhone = "";
+  checkForm();
+});
+
+newPhoneInput.addEventListener("input", function() {
+  this.value = this.value.replace(/[^0-9+\- ]/g, "");
+  const val = this.value.trim();
+  if (val.length >= 8) {
+    finalPhone = val;
+    phoneConfirmed = true;
+    phoneStatus.className = "phone-status show changed";
+    phoneStatus.textContent = "📱 تم تغيير رقم التواصل المعتمد إلى: " + val + " — هذا هو الرقم الجديد المعتمد";
+  } else {
+    finalPhone = "";
+    phoneConfirmed = false;
+    phoneStatus.className = "phone-status";
+    phoneStatus.textContent = "";
+  }
+  checkForm();
+});
+
+// ================== المواد ==================
+function toggleSubject(el, sub) {
+  if (el.classList.contains("selected")) {
+    el.classList.remove("selected");
+    selectedSubjects = selectedSubjects.filter(s => s !== sub);
+  } else {
+    if (selectedSubjects.length >= 3) return;
+    el.classList.add("selected");
+    selectedSubjects.push(sub);
+  }
+  document.querySelectorAll(".subject-item").forEach(d => {
+    if (!d.classList.contains("selected")) {
+      d.classList.toggle("disabled", selectedSubjects.length >= 3);
+    }
+  });
+  document.getElementById("counter").textContent = `تم اختيار ${selectedSubjects.length} من 3`;
+  checkForm();
+}
+
+document.getElementById("agreement").addEventListener("change", checkForm);
+
+function checkForm() {
+  const ok =
+    document.getElementById("studentId").value.trim() &&
+    studentData &&
+    phoneConfirmed &&
+    finalPhone.length >= 8 &&
+    selectedSubjects.length === 3 &&
+    document.getElementById("agreement").checked;
+  document.getElementById("submitBtn").disabled = !ok;
+}
+
+// ================== الإرسال ==================
+document.getElementById("submitBtn").addEventListener("click", async () => {
+  const msg = document.getElementById("message");
+  const studentId = document.getElementById("studentId").value.trim();
+  const subjectsText = selectedSubjects.join(";") + ";";
+
+  const payload = {
+    secret: SECRET_KEY,
+    studentId: studentId,
+    studentName: studentData.name,
+    studentClass: studentData.class,
+    phone: finalPhone,
+    phoneChanged: phoneChanged ? "Yes" : "No",
+    subjects: subjectsText,
+    subjectCount: selectedSubjects.length,
+    agreement: "Yes"
+  };
+
+  try {
+    msg.className = "msg info";
+    msg.textContent = "جاري الإرسال...";
+
+    const res = await fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    msg.className = "msg success";
+    msg.textContent = phoneChanged
+      ? "✅ تم التسجيل بنجاح. تم اعتماد رقم التواصل الجديد: " + finalPhone
+      : "✅ تم التسجيل بنجاح. رقم التواصل المعتمد: " + finalPhone;
+
+    document.getElementById("submitBtn").disabled = true;
+    document.querySelectorAll("input, .subject-item").forEach(el => {
+      if (el.tagName === "INPUT") el.disabled = true;
+      else el.classList.add("disabled");
+    });
+    phoneYesBtn.disabled = true;
+    phoneNoBtn.disabled = true;
+
+  } catch (err) {
+    msg.className = "msg error";
+    msg.textContent = err.message || "حدث خطأ، حاول لاحقاً";
+  }
+});
 
 // ================== نافذة الضوابط ==================
 const rulesModal = document.getElementById("rulesModal");
@@ -503,27 +831,18 @@ function showPasswordPrompt() {
   passwordModal.classList.add("active");
   setTimeout(() => passwordInput.focus(), 100);
 }
-
 function closePasswordPrompt() {
   passwordModal.classList.remove("active");
   passwordInput.value = "";
   passwordError.textContent = "";
 }
-
 passwordSubmitBtn.addEventListener("click", tryUnlockAdmin);
-passwordInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") tryUnlockAdmin();
-});
-
+passwordInput.addEventListener("keydown", (e) => { if (e.key === "Enter") tryUnlockAdmin(); });
 passwordCancelBtn.addEventListener("click", closePasswordPrompt);
-
-passwordModal.addEventListener("click", (e) => {
-  if (e.target === passwordModal) closePasswordPrompt();
-});
+passwordModal.addEventListener("click", (e) => { if (e.target === passwordModal) closePasswordPrompt(); });
 
 function tryUnlockAdmin() {
-  const entered = passwordInput.value;
-  if (entered === ADMIN_PASSWORD) {
+  if (passwordInput.value === ADMIN_PASSWORD) {
     adminUnlocked = true;
     closePasswordPrompt();
     openAdminPanel();
@@ -539,19 +858,13 @@ const adminModal = document.getElementById("adminModal");
 const adminCloseBtn = document.getElementById("adminCloseBtn");
 const refreshStatsBtn = document.getElementById("refreshStatsBtn");
 
-// آلية الفتح 1: Ctrl+Shift+A → تطلب باسورد
 document.addEventListener("keydown", (e) => {
   if (e.ctrlKey && e.shiftKey && (e.key === "A" || e.key === "a")) {
     e.preventDefault();
-    if (adminUnlocked) {
-      openAdminPanel();
-    } else {
-      showPasswordPrompt();
-    }
+    if (adminUnlocked) openAdminPanel(); else showPasswordPrompt();
   }
 });
 
-// آلية الفتح 2: 5 نقرات على الشعار → تطلب باسورد
 let logoClickCount = 0;
 let logoClickTimer = null;
 document.getElementById("headerLogo").addEventListener("click", () => {
@@ -560,11 +873,7 @@ document.getElementById("headerLogo").addEventListener("click", () => {
   logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 1500);
   if (logoClickCount >= 5) {
     logoClickCount = 0;
-    if (adminUnlocked) {
-      openAdminPanel();
-    } else {
-      showPasswordPrompt();
-    }
+    if (adminUnlocked) openAdminPanel(); else showPasswordPrompt();
   }
 });
 
@@ -573,19 +882,16 @@ function openAdminPanel() {
   document.body.style.overflow = "hidden";
   loadStats();
 }
-
 adminCloseBtn.addEventListener("click", () => {
   adminModal.classList.remove("active");
   document.body.style.overflow = "";
 });
-
 adminModal.addEventListener("click", (e) => {
   if (e.target === adminModal) {
     adminModal.classList.remove("active");
     document.body.style.overflow = "";
   }
 });
-
 refreshStatsBtn.addEventListener("click", loadStats);
 
 async function loadStats() {
@@ -593,22 +899,20 @@ async function loadStats() {
   const classStats = document.getElementById("classStats");
   subjectStats.innerHTML = '<div class="admin-empty">جاري التحميل...</div>';
   classStats.innerHTML = '<div class="admin-empty">جاري التحميل...</div>';
-
   try {
     const res = await fetch(STATS_API_URL);
     const data = await res.json();
-
     if (data.error) throw new Error(data.error);
 
     document.getElementById("statTotal").textContent = data.totalRows || 0;
     document.getElementById("statUnique").textContent = data.uniqueStudents || 0;
     document.getElementById("statSubjects").textContent = data.subjectCounts ? Object.keys(data.subjectCounts).length : 0;
+    document.getElementById("statPhoneChanged").textContent = data.phoneChangedCount || 0;
 
     if (data.subjectCounts && Object.keys(data.subjectCounts).length > 0) {
       const maxCount = Math.max(...Object.values(data.subjectCounts), 1);
       let html = "";
-      const sorted = Object.entries(data.subjectCounts).sort((a, b) => b[1] - a[1]);
-      sorted.forEach(([subject, count]) => {
+      Object.entries(data.subjectCounts).sort((a, b) => b[1] - a[1]).forEach(([subject, count]) => {
         const percent = (count / maxCount) * 100;
         html += `<div class="subject-row"><div class="subject-name">${subject}</div><div class="subject-bar"><div class="subject-bar-inner" style="width:${percent}%"></div></div><div class="subject-count">${count}</div></div>`;
       });
@@ -620,8 +924,7 @@ async function loadStats() {
     if (data.classCounts && Object.keys(data.classCounts).length > 0) {
       const maxCount = Math.max(...Object.values(data.classCounts), 1);
       let html = "";
-      const sorted = Object.entries(data.classCounts).sort((a, b) => b[1] - a[1]);
-      sorted.forEach(([cls, count]) => {
+      Object.entries(data.classCounts).sort((a, b) => b[1] - a[1]).forEach(([cls, count]) => {
         const percent = (count / maxCount) * 100;
         html += `<div class="subject-row"><div class="subject-name">${cls}</div><div class="subject-bar"><div class="subject-bar-inner" style="width:${percent}%"></div></div><div class="subject-count">${count}</div></div>`;
       });
@@ -629,116 +932,12 @@ async function loadStats() {
     } else {
       classStats.innerHTML = '<div class="admin-empty">لا توجد بيانات بعد</div>';
     }
-
   } catch (err) {
     console.error(err);
     subjectStats.innerHTML = '<div class="admin-empty" style="color:#c0392b;">فشل تحميل الإحصائيات: ' + err.message + '</div>';
     classStats.innerHTML = '';
   }
 }
-
-// ================== اختيار المواد ==================
-function toggleSubject(el, sub) {
-  if (el.classList.contains("selected")) {
-    el.classList.remove("selected");
-    selectedSubjects = selectedSubjects.filter(s => s !== sub);
-  } else {
-    if (selectedSubjects.length >= 3) return;
-    el.classList.add("selected");
-    selectedSubjects.push(sub);
-  }
-  document.querySelectorAll(".subject-item").forEach(d => {
-    if (!d.classList.contains("selected")) {
-      d.classList.toggle("disabled", selectedSubjects.length >= 3);
-    }
-  });
-  document.getElementById("counter").textContent = `تم اختيار ${selectedSubjects.length} من 3`;
-  checkForm();
-}
-
-// ================== إدخال الرقم الشخصي ==================
-document.getElementById("studentId").addEventListener("input", function() {
-  const id = this.value.trim();
-  const info = allStudents[id];
-  const nameF = document.getElementById("studentName");
-  const classF = document.getElementById("studentClass");
-  const phoneF = document.getElementById("phone");
-
-  if (info) {
-    nameF.value = info.name;
-    classF.value = info.class;
-    phoneF.value = info.phone || "";
-    studentData = info;
-  } else {
-    nameF.value = "";
-    classF.value = "";
-    studentData = null;
-  }
-  checkForm();
-});
-
-// ================== الهاتف ==================
-document.getElementById("phone").addEventListener("input", function() {
-  this.value = this.value.replace(/[^0-9+\- ]/g, "");
-  checkForm();
-});
-
-document.getElementById("agreement").addEventListener("change", checkForm);
-
-function checkForm() {
-  const ok =
-    document.getElementById("studentId").value.trim() &&
-    studentData &&
-    document.getElementById("phone").value.trim().length >= 8 &&
-    selectedSubjects.length === 3 &&
-    document.getElementById("agreement").checked;
-  document.getElementById("submitBtn").disabled = !ok;
-}
-
-// ================== الإرسال ==================
-document.getElementById("submitBtn").addEventListener("click", async () => {
-  const msg = document.getElementById("message");
-  const studentId = document.getElementById("studentId").value.trim();
-
-  const subjectsText = selectedSubjects.join(";") + ";";
-
-  const payload = {
-    secret: SECRET_KEY,
-    studentId: studentId,
-    studentName: studentData.name,
-    studentClass: studentData.class,
-    phone: document.getElementById("phone").value.trim(),
-    subjects: subjectsText,
-    subjectCount: selectedSubjects.length,
-    agreement: "Yes"
-  };
-
-  try {
-    msg.className = "msg info";
-    msg.textContent = "جاري الإرسال...";
-
-    const res = await fetch(API_URL, {
-      method: "POST",
-      body: JSON.stringify(payload)
-    });
-
-    const data = await res.json();
-
-    if (data.error) throw new Error(data.error);
-
-    msg.className = "msg success";
-    msg.textContent = "تم التسجيل بنجاح ✅";
-    document.getElementById("submitBtn").disabled = true;
-    document.querySelectorAll("input, .subject-item").forEach(el => {
-      if (el.tagName === "INPUT") el.disabled = true;
-      else el.classList.add("disabled");
-    });
-
-  } catch (err) {
-    msg.className = "msg error";
-    msg.textContent = err.message || "حدث خطأ، حاول لاحقاً";
-  }
-});
 </script>
 </body>
 </html>
