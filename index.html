@@ -4,41 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>تسجيل الصفوف الإثرائية - منتصف الفصل الدراسي الأول للعام الأكاديمي 2026-2027</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
   * { box-sizing: border-box; }
   body {
     font-family: 'Segoe UI', Tahoma, sans-serif;
-    margin: 0;
-    padding: 20px 15px;
+    margin: 0; padding: 20px 15px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-    min-height: 100vh;
-    background-attachment: fixed;
+    min-height: 100vh; background-attachment: fixed;
   }
 
   .container {
-    max-width: 620px;
-    margin: auto;
-    background: white;
-    padding: 0;
+    max-width: 620px; margin: auto; background: white; padding: 0;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 6px rgba(255,255,255,0.4);
-    position: relative;
-    overflow: hidden;
+    position: relative; overflow: hidden;
   }
   .container::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 8px;
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 8px;
     background: linear-gradient(90deg, #f093fb 0%, #f5576c 25%, #f6d365 50%, #4facfe 75%, #43e97b 100%);
-    background-size: 300% 100%;
-    animation: rainbowShift 6s linear infinite;
+    background-size: 300% 100%; animation: rainbowShift 6s linear infinite;
     border-radius: 20px 20px 0 0;
   }
-  @keyframes rainbowShift {
-    0%   { background-position: 0% 0%; }
-    100% { background-position: 300% 0%; }
-  }
+  @keyframes rainbowShift { 0% { background-position: 0% 0%; } 100% { background-position: 300% 0%; } }
 
   .container-inner { padding: 35px 30px 30px; }
 
@@ -50,6 +38,36 @@
     border: 1px dashed #ba68c8;
   }
   .date-bar .date-icon { font-size: 18px; }
+
+  .progress-wrap { margin-bottom: 20px; }
+  .progress-bar-outer {
+    height: 22px; background: #e0e6ed; border-radius: 12px; overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .progress-bar-inner {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, #43e97b, #38f9d7);
+    border-radius: 12px; transition: width 0.5s ease;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 10px; color: white; font-weight: 800; font-size: 12px;
+  }
+  .progress-label {
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: #666; margin-top: 5px; font-weight: 600;
+  }
+
+  .welcome-box {
+    display: none; padding: 16px;
+    background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+    border: 2px solid #43e97b; border-radius: 12px;
+    margin-bottom: 15px; animation: fadeIn 0.4s ease;
+  }
+  .welcome-box.show { display: block; }
+  .welcome-box .welcome-title {
+    font-size: 17px; font-weight: 800; color: #1b5e20; margin-bottom: 6px;
+  }
+  .welcome-box .welcome-info { font-size: 14px; color: #2e7d32; font-weight: 600; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
 
   .header-logo { text-align: center; margin-bottom: 20px; cursor: pointer; user-select: none; }
   .header-logo img { max-width: 100%; height: auto; max-height: 140px; }
@@ -64,9 +82,8 @@
 
   label { display: block; margin: 15px 0 6px; font-weight: 700; color: #2c3e50; font-size: 14px; }
   input[type="text"], input[type="tel"] {
-    width: 100%; padding: 12px 14px;
-    border: 2px solid #e0e6ed; border-radius: 10px;
-    font-size: 15px; transition: all 0.25s; background: #fafbfc;
+    width: 100%; padding: 12px 14px; border: 2px solid #e0e6ed;
+    border-radius: 10px; font-size: 15px; transition: all 0.25s; background: #fafbfc;
   }
   input[type="text"]:focus, input[type="tel"]:focus {
     outline: none; border-color: #667eea; background: white;
@@ -107,11 +124,9 @@
   }
   .choice-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
   .choice-btn.yes { border-color: #27ae60; color: #27ae60; }
-  .choice-btn.yes:hover { background: #eafaf1; }
-  .choice-btn.yes.active { background: #27ae60; color: white; border-color: #27ae60; }
+  .choice-btn.yes.active { background: #27ae60; color: white; }
   .choice-btn.no { border-color: #e67e22; color: #e67e22; }
-  .choice-btn.no:hover { background: #fff5eb; }
-  .choice-btn.no.active { background: #e67e22; color: white; border-color: #e67e22; }
+  .choice-btn.no.active { background: #e67e22; color: white; }
 
   .new-phone-box {
     display: none; margin-top: 12px; padding: 14px;
@@ -119,10 +134,6 @@
     border-radius: 10px; animation: fadeIn 0.3s ease;
   }
   .new-phone-box.active { display: block; }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-6px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
   .new-phone-box label { margin-top: 0; color: #b8860b; }
 
   .phone-status {
@@ -178,6 +189,22 @@
   .contact-btn.email { background: linear-gradient(135deg, #EA4335, #c5221f); }
   .contact-btn svg { width: 20px; height: 20px; fill: white; }
 
+  .footer-team {
+    margin-top: 30px; padding-top: 20px; border-top: 2px dashed #e0e6ed;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .team-member { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; }
+  .team-member img {
+    width: 90px; height: 90px; border-radius: 50%; object-fit: cover;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #667eea, #764ba2, #f093fb) border-box;
+  }
+  .team-member .member-text { font-size: 13px; color: #555; line-height: 1.7; }
+  .team-member .member-role { color: #4a90d9; font-weight: 800; font-size: 13px; display: block; }
+  .team-member .member-name { color: #1a3a5c; font-weight: 800; font-size: 14px; display: block; margin-top: 3px; }
+
   .modal-overlay {
     display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0,0,0,0.65); z-index: 1000; padding: 20px; overflow-y: auto;
@@ -190,7 +217,6 @@
   }
   .modal-school-logo { text-align: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
   .modal-school-logo img { max-width: 100%; max-height: 90px; height: auto; }
-
   .modal-box h2 { color: #1a3a5c; text-align: center; font-size: 22px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #4a90d9; }
   .modal-box h3 { color: #4a90d9; font-size: 18px; margin-top: 20px; margin-bottom: 10px; padding: 8px 12px; background: #eaf4fd; border-radius: 8px; border-right: 4px solid #4a90d9; }
   .modal-box ol { padding-right: 25px; margin: 0; }
@@ -214,22 +240,6 @@
   .close-btn:hover:not(:disabled) { background: #219a52; }
   .close-btn:disabled { background: #bdc3c7; cursor: not-allowed; }
 
-  .footer-team {
-    margin-top: 30px; padding-top: 20px; border-top: 2px dashed #e0e6ed;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
-  }
-  .team-member { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; }
-  .team-member img {
-    width: 90px; height: 90px; border-radius: 50%; object-fit: cover;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-    border: 3px solid transparent;
-    background: linear-gradient(white, white) padding-box,
-                linear-gradient(135deg, #667eea, #764ba2, #f093fb) border-box;
-  }
-  .team-member .member-text { font-size: 13px; color: #555; line-height: 1.7; }
-  .team-member .member-role { color: #4a90d9; font-weight: 800; font-size: 13px; display: block; }
-  .team-member .member-name { color: #1a3a5c; font-weight: 800; font-size: 14px; display: block; margin-top: 3px; }
-
   .password-overlay {
     display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0,0,0,0.85); z-index: 3000; padding: 20px;
@@ -250,7 +260,6 @@
   }
   .password-box input[type="password"]:focus { outline: none; border-color: #4a90d9; }
   .password-box button { width: 100%; padding: 14px; margin-top: 0; background: linear-gradient(135deg, #4a90d9, #3a7bc8); font-size: 16px; }
-  .password-box button:hover:not(:disabled) { background: linear-gradient(135deg, #3a7bc8, #2c6bb0); }
   .password-box .cancel-btn { background: #95a5a6; margin-top: 10px; }
   .password-box .cancel-btn:hover { background: #7f8c8d; }
   .password-box .error-msg { color: #c0392b; font-size: 14px; margin-top: 10px; min-height: 20px; font-weight: 700; }
@@ -261,7 +270,7 @@
   }
   .admin-overlay.active { display: flex; align-items: flex-start; justify-content: center; }
   .admin-box {
-    background: white; max-width: 800px; width: 100%; margin: auto;
+    background: white; max-width: 900px; width: 100%; margin: auto;
     border-radius: 12px; padding: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.4);
     max-height: 92vh; overflow-y: auto;
   }
@@ -288,6 +297,47 @@
   .stat-card .stat-label { font-size: 13px; margin-top: 6px; opacity: 0.95; }
 
   .admin-section-title { color: #1a3a5c; font-size: 16px; font-weight: bold; margin: 20px 0 10px 0; padding-bottom: 6px; border-bottom: 2px solid #eee; }
+
+  .search-box { display: flex; gap: 10px; margin-bottom: 20px; }
+  .search-box input {
+    flex: 1; padding: 12px 14px; border: 2px solid #e0e6ed;
+    border-radius: 10px; font-size: 15px; font-family: inherit;
+  }
+  .search-box input:focus { outline: none; border-color: #4a90d9; }
+  .search-box button {
+    width: auto; padding: 0 20px; margin: 0;
+    background: linear-gradient(135deg, #4a90d9, #3a7bc8);
+    border-radius: 10px; font-size: 15px;
+  }
+  .search-result {
+    display: none; padding: 16px; margin-bottom: 20px;
+    background: #f8faff; border-radius: 10px;
+    border: 2px solid #4a90d9;
+  }
+  .search-result.show { display: block; animation: fadeIn 0.3s ease; }
+  .search-result.notfound {
+    background: #fdecea; border-color: #c0392b; color: #c0392b;
+    font-weight: 700; text-align: center;
+  }
+  .search-result .student-info {
+    display: grid; grid-template-columns: auto 1fr; gap: 8px 15px;
+    font-size: 14px; margin-bottom: 12px;
+  }
+  .search-result .student-info .lbl { color: #666; font-weight: 700; }
+  .search-result .student-info .val { color: #1a3a5c; font-weight: 600; }
+  .search-result .delete-btn {
+    width: 100%; padding: 12px; margin: 0;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    font-size: 15px;
+  }
+  .search-result .delete-btn:hover:not(:disabled) { background: linear-gradient(135deg, #c0392b, #a93226); }
+
+  .chart-wrap {
+    background: #f8fafc; border-radius: 10px; padding: 20px;
+    margin-bottom: 20px; border: 1px solid #e1e8ed;
+  }
+  .chart-wrap canvas { max-height: 350px; }
+
   .subject-stats { display: flex; flex-direction: column; gap: 8px; }
   .subject-row {
     display: flex; align-items: center; gap: 12px;
@@ -310,6 +360,8 @@
     .contact-buttons { grid-template-columns: 1fr; }
     .admin-links { grid-template-columns: 1fr; }
     .phone-choice { grid-template-columns: 1fr; }
+    .search-box { flex-direction: column; }
+    .search-box button { padding: 12px; }
     h1 { font-size: 17px; }
   }
 
@@ -338,6 +390,21 @@
     </div>
 
     <h1>تسجيل الصفوف الإثرائية - منتصف الفصل الدراسي الأول<br>للعام الأكاديمي 2026-2027</h1>
+
+    <div class="progress-wrap">
+      <div class="progress-bar-outer">
+        <div class="progress-bar-inner" id="progressBar">0%</div>
+      </div>
+      <div class="progress-label">
+        <span>تقدم التسجيل</span>
+        <span id="progressText">0 من 5</span>
+      </div>
+    </div>
+
+    <div class="welcome-box" id="welcomeBox">
+      <div class="welcome-title" id="welcomeTitle"></div>
+      <div class="welcome-info" id="welcomeInfo"></div>
+    </div>
 
     <label>الرقم الشخصي للطالب</label>
     <input type="text" id="studentId" placeholder="أدخل الرقم الشخصي" autocomplete="off">
@@ -500,7 +567,7 @@
 <div class="admin-overlay" id="adminModal">
   <div class="admin-box">
     <h2>🔐 لوحة الإدارة</h2>
-    <div class="admin-subtitle">إحصائيات التسجيل في الصفوف الإثرائية</div>
+    <div class="admin-subtitle">إحصائيات وإدارة التسجيل في الصفوف الإثرائية</div>
 
     <div class="admin-links">
       <a class="admin-link onedrive" href="https://qatareducation-my.sharepoint.com/:x:/g/personal/a_atia1201_education_qa/IQAtrO3zeAYxTbMDk9EDYrvhAc6_AaBW0K1oed1Kw4YndkU?email=a.eldessouki0703%40education.qa&e=wAv96b" target="_blank" rel="noopener">
@@ -510,6 +577,13 @@
         📗 فتح Google Sheet
       </a>
     </div>
+
+    <div class="admin-section-title">🔍 البحث عن طالب</div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="أدخل الرقم الشخصي للطالب">
+      <button type="button" id="searchBtn">بحث</button>
+    </div>
+    <div class="search-result" id="searchResult"></div>
 
     <button class="admin-link refresh" id="refreshStatsBtn" style="width:100%; margin-bottom:20px;">🔄 تحديث الإحصائيات</button>
 
@@ -532,6 +606,11 @@
       </div>
     </div>
 
+    <div class="admin-section-title">📊 رسم بياني لتوزيع المواد</div>
+    <div class="chart-wrap">
+      <canvas id="subjectsChart"></canvas>
+    </div>
+
     <div class="admin-section-title">📚 عدد المسجلين في كل مادة</div>
     <div class="subject-stats" id="subjectStats">
       <div class="admin-empty">اضغط "تحديث الإحصائيات" لتحميل البيانات</div>
@@ -552,8 +631,7 @@ const SUBJECTS = [
   "الرياضيات", "العلوم", "اللغة العربية", "اللغة الإنجليزية",
   "التربية الإسلامية", "الدراسات الاجتماعية"
 ];
-
-const API_URL = "https://script.google.com/macros/s/AKfycbymngzA6mUFqiS8I4oknf9VPwRYmR9d43cKQMFyLhJm3B5qMi17dclcoE0qYhc6mKQJ/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbxGPovCYz09_awo1MPPtBjWiWWPCxxSxwk77Rqr0gc4IbWMp_c2RB6xcEPdUIBi7cQl/exec";
 const SECRET_KEY = "AB2027";
 const ADMIN_PASSWORD = "ABAH2027@";
 const STATS_API_URL = API_URL + "?stats=1&secret=" + SECRET_KEY;
@@ -566,18 +644,33 @@ let adminUnlocked = false;
 let phoneConfirmed = false;
 let phoneChanged = false;
 let finalPhone = "";
+let subjectsChart = null;
 
 // ================== عرض اليوم والتاريخ ==================
 (function displayToday() {
   const daysAr = ["الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
   const monthsAr = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
   const now = new Date();
-  const dayName = daysAr[now.getDay()];
-  const d = now.getDate();
-  const m = monthsAr[now.getMonth()];
-  const y = now.getFullYear();
-  document.getElementById("todayDate").textContent = `${dayName}، ${d} ${m} ${y}`;
+  document.getElementById("todayDate").textContent =
+    `${daysAr[now.getDay()]}، ${now.getDate()} ${monthsAr[now.getMonth()]} ${now.getFullYear()}`;
 })();
+
+// ================== شريط التقدم ==================
+function updateProgress() {
+  const checks = [
+    !!document.getElementById("studentId").value.trim(),
+    !!studentData,
+    phoneConfirmed && finalPhone.length >= 8,
+    selectedSubjects.length === 3,
+    document.getElementById("agreement").checked
+  ];
+  const done = checks.filter(Boolean).length;
+  const percent = Math.round((done / 5) * 100);
+  const bar = document.getElementById("progressBar");
+  bar.style.width = percent + "%";
+  bar.textContent = percent + "%";
+  document.getElementById("progressText").textContent = `${done} من 5`;
+}
 
 // ================== عرض المواد ==================
 const subjectsList = document.getElementById("subjectsList");
@@ -618,6 +711,7 @@ document.getElementById("studentId").addEventListener("input", function() {
   const nameF = document.getElementById("studentName");
   const classF = document.getElementById("studentClass");
   const phoneF = document.getElementById("phone");
+  const welcomeBox = document.getElementById("welcomeBox");
 
   phoneConfirmed = false;
   phoneChanged = false;
@@ -636,12 +730,18 @@ document.getElementById("studentId").addEventListener("input", function() {
     phoneF.value = info.phone || "";
     studentData = info;
     document.getElementById("phoneConfirmBox").style.display = "block";
+
+    document.getElementById("welcomeTitle").textContent = "👋 أهلاً بك يا " + info.name;
+    document.getElementById("welcomeInfo").textContent = "الصف: " + info.class + " — اختر موادك الثلاث بحرية";
+    welcomeBox.classList.add("show");
   } else {
     nameF.value = "";
     classF.value = "";
     studentData = null;
     document.getElementById("phoneConfirmBox").style.display = "none";
+    welcomeBox.classList.remove("show");
   }
+  updateProgress();
   checkForm();
 });
 
@@ -663,6 +763,7 @@ phoneYesBtn.addEventListener("click", () => {
   phoneNoBtn.classList.remove("active");
   phoneStatus.className = "phone-status show ok";
   phoneStatus.textContent = "✅ تم تأكيد الرقم المعتمد وسيُستخدم في التسجيل";
+  updateProgress();
   checkForm();
 });
 
@@ -676,6 +777,7 @@ phoneNoBtn.addEventListener("click", () => {
   phoneStatus.className = "phone-status";
   phoneStatus.textContent = "";
   finalPhone = "";
+  updateProgress();
   checkForm();
 });
 
@@ -693,6 +795,7 @@ newPhoneInput.addEventListener("input", function() {
     phoneStatus.className = "phone-status";
     phoneStatus.textContent = "";
   }
+  updateProgress();
   checkForm();
 });
 
@@ -712,10 +815,14 @@ function toggleSubject(el, sub) {
     }
   });
   document.getElementById("counter").textContent = `تم اختيار ${selectedSubjects.length} من 3`;
+  updateProgress();
   checkForm();
 }
 
-document.getElementById("agreement").addEventListener("change", checkForm);
+document.getElementById("agreement").addEventListener("change", () => {
+  updateProgress();
+  checkForm();
+});
 
 function checkForm() {
   const ok =
@@ -770,7 +877,6 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
     });
     phoneYesBtn.disabled = true;
     phoneNoBtn.disabled = true;
-
   } catch (err) {
     msg.className = "msg error";
     msg.textContent = err.message || "حدث خطأ، حاول لاحقاً";
@@ -805,6 +911,7 @@ closeRulesBtn.addEventListener("click", () => {
   rulesModal.classList.remove("active");
   document.body.style.overflow = "";
   document.getElementById("agreement").checked = true;
+  updateProgress();
   checkForm();
 });
 
@@ -836,17 +943,33 @@ function closePasswordPrompt() {
   passwordInput.value = "";
   passwordError.textContent = "";
 }
+
 passwordSubmitBtn.addEventListener("click", tryUnlockAdmin);
 passwordInput.addEventListener("keydown", (e) => { if (e.key === "Enter") tryUnlockAdmin(); });
 passwordCancelBtn.addEventListener("click", closePasswordPrompt);
 passwordModal.addEventListener("click", (e) => { if (e.target === passwordModal) closePasswordPrompt(); });
 
+function logAdminAttempt(eventType, details) {
+  fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      secret: SECRET_KEY,
+      action: "logAdminLogin",
+      eventType: eventType,
+      details: details
+    })
+  }).catch(() => {});
+}
+
 function tryUnlockAdmin() {
-  if (passwordInput.value === ADMIN_PASSWORD) {
+  const entered = passwordInput.value;
+  if (entered === ADMIN_PASSWORD) {
+    logAdminAttempt("admin_login_success", "successful login");
     adminUnlocked = true;
     closePasswordPrompt();
     openAdminPanel();
   } else {
+    logAdminAttempt("admin_login_failed", "wrong password");
     passwordError.textContent = "❌ كلمة المرور غير صحيحة";
     passwordInput.value = "";
     passwordInput.focus();
@@ -917,6 +1040,7 @@ async function loadStats() {
         html += `<div class="subject-row"><div class="subject-name">${subject}</div><div class="subject-bar"><div class="subject-bar-inner" style="width:${percent}%"></div></div><div class="subject-count">${count}</div></div>`;
       });
       subjectStats.innerHTML = html;
+      drawChart(data.subjectCounts);
     } else {
       subjectStats.innerHTML = '<div class="admin-empty">لا توجد بيانات بعد</div>';
     }
@@ -936,6 +1060,135 @@ async function loadStats() {
     console.error(err);
     subjectStats.innerHTML = '<div class="admin-empty" style="color:#c0392b;">فشل تحميل الإحصائيات: ' + err.message + '</div>';
     classStats.innerHTML = '';
+  }
+}
+
+// ================== الرسم البياني ==================
+function drawChart(subjectCounts) {
+  const ctx = document.getElementById("subjectsChart").getContext("2d");
+  const labels = Object.keys(subjectCounts);
+  const values = Object.values(subjectCounts);
+  const colors = ["#667eea", "#f093fb", "#4facfe", "#43e97b", "#f6d365", "#f5576c", "#9b59b6", "#00cec9"];
+
+  if (subjectsChart) subjectsChart.destroy();
+
+  subjectsChart = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels: labels,
+      datasets: [{
+        data: values,
+        backgroundColor: colors.slice(0, labels.length),
+        borderWidth: 2,
+        borderColor: "#fff"
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          position: "bottom",
+          labels: {
+            font: { family: "Segoe UI, Tahoma, sans-serif", size: 13, weight: "600" },
+            padding: 12,
+            usePointStyle: true
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const total = context.dataset.data.reduce((a, b) => a + b, 0);
+              const percent = ((context.parsed / total) * 100).toFixed(1);
+              return context.label + ": " + context.parsed + " طالب (" + percent + "%)";
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+// ================== البحث عن طالب ==================
+const searchInput = document.getElementById("searchInput");
+const searchBtn = document.getElementById("searchBtn");
+const searchResult = document.getElementById("searchResult");
+
+searchBtn.addEventListener("click", searchStudent);
+searchInput.addEventListener("keydown", (e) => { if (e.key === "Enter") searchStudent(); });
+
+async function searchStudent() {
+  const id = searchInput.value.trim();
+  if (!id) {
+    searchResult.className = "search-result show notfound";
+    searchResult.textContent = "⚠️ الرجاء إدخال الرقم الشخصي";
+    return;
+  }
+
+  searchResult.className = "search-result show";
+  searchResult.innerHTML = '<div style="text-align:center;color:#666;">جاري البحث...</div>';
+
+  try {
+    const url = API_URL + "?search=1&secret=" + SECRET_KEY + "&studentId=" + encodeURIComponent(id);
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (data.error) throw new Error(data.error);
+
+    if (!data.found) {
+      searchResult.className = "search-result show notfound";
+      searchResult.textContent = "❌ لم يتم العثور على تسجيل لهذا الطالب";
+      return;
+    }
+
+    const s = data.student;
+    searchResult.className = "search-result show";
+    searchResult.innerHTML = `
+      <div class="student-info">
+        <div class="lbl">الاسم:</div><div class="val">${s.studentName}</div>
+        <div class="lbl">الصف:</div><div class="val">${s.studentClass}</div>
+        <div class="lbl">المواد:</div><div class="val">${s.subjects}</div>
+        <div class="lbl">الهاتف:</div><div class="val">${s.phone}</div>
+        <div class="lbl">غيّر الهاتف:</div><div class="val">${s.phoneChanged === "Yes" ? "نعم" : "لا"}</div>
+        <div class="lbl">وقت التسجيل:</div><div class="val">${s.timestamp ? new Date(s.timestamp).toLocaleString("ar-QA") : "-"}</div>
+      </div>
+      <button type="button" class="delete-btn" id="deleteStudentBtn">🗑️ حذف تسجيل هذا الطالب</button>
+    `;
+
+    document.getElementById("deleteStudentBtn").addEventListener("click", () => {
+      deleteStudent(s.studentId, s.studentName);
+    });
+  } catch (err) {
+    searchResult.className = "search-result show notfound";
+    searchResult.textContent = "❌ فشل البحث: " + err.message;
+  }
+}
+
+// ================== حذف تسجيل طالب ==================
+async function deleteStudent(studentId, studentName) {
+  if (!confirm(`هل أنت متأكد من حذف تسجيل الطالب: ${studentName}\nرقمه الشخصي: ${studentId}\n\nلا يمكن التراجع عن هذه العملية!`)) {
+    return;
+  }
+
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        secret: SECRET_KEY,
+        action: "deleteStudent",
+        studentId: studentId
+      })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    alert("✅ " + data.message);
+    searchResult.className = "search-result show";
+    searchResult.innerHTML = '<div style="text-align:center;color:#27ae60;font-weight:700;">✅ تم حذف التسجيل بنجاح</div>';
+    searchInput.value = "";
+    loadStats();
+  } catch (err) {
+    alert("❌ فشل الحذف: " + err.message);
   }
 }
 </script>
